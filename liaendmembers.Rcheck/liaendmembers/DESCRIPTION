@@ -1,0 +1,21 @@
+Package: liaendmembers
+Type: Package
+Title: What the Package Does (Title Case)
+Version: 0.1.0
+Authors@R: c(
+    person(
+      "Karan", "Desai",
+      email = "workforce.karan@gmail.com",
+      role = c("aut", "cre")
+    )
+  )
+Description: More about what it does (maybe more than one line).
+    Continuation lines should be indented.
+License: MIT
+Encoding: UTF-8
+RoxygenNote: 7.3.2
+NeedsCompilation: no
+Packaged: 2025-08-06 18:50:20 UTC; kd
+Author: Karan Desai [aut, cre]
+Maintainer: Karan Desai <workforce.karan@gmail.com>
+Built: R 4.1.2; ; 2025-08-06 18:50:21 UTC; unix
