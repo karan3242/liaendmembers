@@ -30,20 +30,47 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 ### ** Examples
 
-
-# Creat object with class liaendmembers
-data("dor_silver_hoard")
-end_members <- endmembers(dor_silver_hoard[[1]],
-        dor_silver_hoard[[2]],
-        dor_silver_hoard[[3]]
+# Create object with class liaendmembers
+data("dor")
+end_members <- endmembers(
+        dor,
+        colnames(dor),
+        tolerance = 0.01
 )
-# Summary of the liaendmembers object
+# Prind summary of the liaendmembers object
 summary.liaendmembers(end_members)
 
 
 
 base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
 base::cat("endmembers", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+cleanEx()
+nameEx("summary.liaendmembers")
+### * summary.liaendmembers
+
+flush(stderr()); flush(stdout())
+
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+### Name: summary.liaendmembers
+### Title: Summary of LIA Endmember groups
+### Aliases: summary.liaendmembers
+
+### ** Examples
+
+# Create object with class liaendmembers
+data("dor")
+end_members <- endmembers(
+        dor,
+        colnames(dor),
+        tolerance = 0.01
+)
+# Prind summary of the liaendmembers object
+summary.liaendmembers(end_members)
+
+
+
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("summary.liaendmembers", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
 ### * <FOOTER>
 ###
 cleanEx()

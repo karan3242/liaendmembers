@@ -4,10 +4,12 @@
 \alias{endmembers}
 \title{Find Endmembers}
 \usage{
-endmembers(pb64, pb74, pb84, tolerance = 0.01, ...)
+endmembers(x, col = NULL, tolerance = 0.01, ...)
 }
 \arguments{
-\item{pb64, pb74, pb84}{Vectors of Pb Isotope rations 206/204, 207/204, 208/204}
+\item{x}{data.frame or matrix object or Pb 206/204, 207/204, 208/204 isotope ratios.}
+
+\item{col}{Isotope column names.}
 
 \item{tolerance}{Tolerance value for points considered to be intercepted.
 (Default 0.01)}
@@ -15,7 +17,12 @@ endmembers(pb64, pb74, pb84, tolerance = 0.01, ...)
 \item{...}{Additional Parameters}
 }
 \value{
-An object of class 'liaendmembers' as a list of 5
+An object of class 'liaendmembers' as a list of 6
+     \item{data}{Isotope data}
+     \item{group1, group2}{End member groups}
+     \item{mixing}{Mixing Group}
+     \item{tolerance}{Totlarance value}
+     \item{pca}{List of PCA analysis}
 }
 \description{
 Finds endmembers from a set of Lead Isotope Points using Principle Component
@@ -23,11 +30,10 @@ analysis and the Geochron slope according to the two-stage model.
 }
 \examples{
 # Create object with class liaendmembers
-data("dor_silver_hoard")
+data("dor")
 end_members <- endmembers(
-        pb64 = dor_silver_hoard[[1]],
-        pb74 = dor_silver_hoard[[2]],
-        pb84 = dor_silver_hoard[[3]],
+        dor,
+        colnames(dor),
         tolerance = 0.01
 )
 # Prind summary of the liaendmembers object

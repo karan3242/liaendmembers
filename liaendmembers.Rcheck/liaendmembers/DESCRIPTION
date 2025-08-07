@@ -1,7 +1,7 @@
 Package: liaendmembers
 Type: Package
 Title: Find Endmembers For Lead Isotope Analysis
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: c(
     person(
       "Karan", "Desai",
@@ -14,7 +14,7 @@ License: MIT
 Encoding: UTF-8
 RoxygenNote: 7.3.2
 NeedsCompilation: no
-Packaged: 2025-08-07 08:46:07 UTC; kd
+Packaged: 2025-08-07 15:46:31 UTC; kd
 Author: Karan Desai [aut, cre]
 Maintainer: Karan Desai <workforce.karan@gmail.com>
-Built: R 4.1.2; ; 2025-08-07 08:46:09 UTC; unix
+Built: R 4.1.2; ; 2025-08-07 15:46:32 UTC; unix

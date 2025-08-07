@@ -5,7 +5,7 @@
 * using options ‘--no-manual --as-cran’
 * checking for file ‘liaendmembers/DESCRIPTION’ ... OK
 * checking extension type ... Package
-* this is package ‘liaendmembers’ version ‘0.1.0’
+* this is package ‘liaendmembers’ version ‘0.2.0’
 * package encoding: UTF-8
 * checking package namespace information ... OK
 * checking package dependencies ... OK
@@ -19,8 +19,7 @@
 * checking whether package ‘liaendmembers’ can be installed ... OK
 * checking installed package size ... OK
 * checking package directory ... OK
-* checking for future file timestamps ... NOTE
-unable to verify current time
+* checking for future file timestamps ... OK
 * checking DESCRIPTION meta-information ... NOTE
 License components which are templates and need '+ file LICENSE':
   MIT
@@ -57,13 +56,11 @@ manual.
 * checking Rd metadata ... OK
 * checking Rd line widths ... OK
 * checking Rd cross-references ... OK
-* checking for missing documentation entries ... WARNING
-Undocumented code objects:
-  ‘summary.liaendmembers’
-All user-level objects in a package should have documentation entries.
-See chapter ‘Writing R documentation files’ in the ‘Writing R
-Extensions’ manual.
-* checking for code/documentation mismatches ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... WARNING
+Variables with usage in documentation object 'dor' but not in code:
+  ‘dor’
+
 * checking Rd \usage sections ... OK
 * checking Rd contents ... OK
 * checking for unstated dependencies in examples ... OK
@@ -78,20 +75,18 @@ The error most likely occurred in:
 > 
 > ### ** Examples
 > 
-> 
-> # Creat object with class liaendmembers
-> data("dor_silver_hoard")
-Warning in data("dor_silver_hoard") :
-  data set ‘dor_silver_hoard’ not found
-> end_members <- endmembers(dor_silver_hoard[[1]],
-+         dor_silver_hoard[[2]],
-+         dor_silver_hoard[[3]]
+> # Create object with class liaendmembers
+> data("dor")
+Warning in data("dor") : data set ‘dor’ not found
+> end_members <- endmembers(
++         dor,
++         colnames(dor),
++         tolerance = 0.01
 + )
-Error in safe_cbind(pb64, pb74, pb84) : 
-  object 'dor_silver_hoard' not found
-Calls: endmembers -> safe_cbind
+Error in endmembers(dor, colnames(dor), tolerance = 0.01) : 
+  object 'dor' not found
 Execution halted
 * checking for non-standard things in the check directory ... OK
 * checking for detritus in the temp directory ... OK
 * DONE
-Status: 1 ERROR, 2 WARNINGs, 2 NOTEs
+Status: 1 ERROR, 2 WARNINGs, 1 NOTE

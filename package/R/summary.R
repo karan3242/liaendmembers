@@ -20,11 +20,12 @@ summary.liaendmembers <- function(x, ...) {
      count <- data.frame(
           "Group1" = nrow(x$group1),
           "Group2" = nrow(x$group2),
-          "Mixing" = nrow(x$mixing)
+          "Mixing" = nrow(x$mixing),
+          "Total" = sum(nrow(x$group1), nrow(x$group2), nrow(x$mixing))
      )
      row.names(count) <- "Counts"
      print(count)
-     cat(rep("-", 14), "\n")
+     cat(rep("-", 18), "\n")
      print(summary(x$pca))
      invisible(list("Counts" = unlist(count),
                     "Tolarance"= x$tolarance,

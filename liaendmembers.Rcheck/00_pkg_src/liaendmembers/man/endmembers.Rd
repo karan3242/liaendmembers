@@ -4,10 +4,12 @@
 \alias{endmembers}
 \title{Find Endmembers}
 \usage{
-endmembers(pb64, pb74, pb84, tolerance = 0.01, ...)
+endmembers(x, col = NULL, tolerance = 0.01, ...)
 }
 \arguments{
-\item{pb64, pb74, pb84}{Vectors of Pb Isotope rations 206/204, 207/204, 208/204}
+\item{x}{Data frame of matrix}
+
+\item{col}{Isotope column names}
 
 \item{tolerance}{Tolerance value for points considered to be intercepted.
 (Default 0.01)}
@@ -22,13 +24,13 @@ Finds endmembers from a set of Lead Isotope Points using Principle Component
 analysis and the Geochron slope according to the two-stage model.
 }
 \examples{
-
-# Creat object with class liaendmembers
-data("dor_silver_hoard")
-end_members <- endmembers(dor_silver_hoard[[1]],
-        dor_silver_hoard[[2]],
-        dor_silver_hoard[[3]]
+# Create object with class liaendmembers
+data("dor")
+end_members <- endmembers(
+        dor,
+        colnames(dor),
+        tolerance = 0.01
 )
-# Summary of the liaendmembers object
+# Prind summary of the liaendmembers object
 summary.liaendmembers(end_members)
 }
