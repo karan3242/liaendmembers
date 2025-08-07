@@ -18,6 +18,34 @@ library('liaendmembers')
 base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
 base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
 cleanEx()
+nameEx("dor")
+### * dor
+
+flush(stderr()); flush(stdout())
+
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+### Name: dor
+### Title: LIA points from Tel Dor
+### Aliases: dor
+### Keywords: datasets
+
+### ** Examples
+
+# Create object with class liaendmembers
+data("dor")
+end_members <- endmembers(
+        dor,
+        colnames(dor),
+        tolerance = 0.01
+)
+# Prind summary of the liaendmembers object
+summary.liaendmembers(end_members)
+
+
+
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("dor", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+cleanEx()
 nameEx("endmembers")
 ### * endmembers
 

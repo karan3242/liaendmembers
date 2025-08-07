@@ -37,15 +37,16 @@ Type 'q()' to quit R.
 > base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
 > base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
 > cleanEx()
-> nameEx("endmembers")
-> ### * endmembers
+> nameEx("dor")
+> ### * dor
 > 
 > flush(stderr()); flush(stdout())
 > 
 > base::assign(".ptime", proc.time(), pos = "CheckExEnv")
-> ### Name: endmembers
-> ### Title: Find Endmembers
-> ### Aliases: endmembers
+> ### Name: dor
+> ### Title: LIA points from Tel Dor
+> ### Aliases: dor
+> ### Keywords: datasets
 > 
 > ### ** Examples
 > 

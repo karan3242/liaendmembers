@@ -7,9 +7,9 @@
 endmembers(x, col = NULL, tolerance = 0.01, ...)
 }
 \arguments{
-\item{x}{data.frame or matrix object or Pb 206/204, 207/204, 208/204 isotope ratios.}
+\item{x}{data.frame or matrix object containing Pb 206/204, 207/204, 208/204 isotope ratios.}
 
-\item{col}{Isotope column names.}
+\item{col}{Isotope column names containing Pb 206/204, 207/204, 208/204 isotope ratios}
 
 \item{tolerance}{Tolerance value for points considered to be intercepted.
 (Default 0.01)}
@@ -19,7 +19,7 @@ endmembers(x, col = NULL, tolerance = 0.01, ...)
 \value{
 An object of class 'liaendmembers' as a list of 6
      \item{data}{Isotope data}
-     \item{group1, group2}{End member groups}
+     \item{group1,group2}{End member groups}
      \item{mixing}{Mixing Group}
      \item{tolerance}{Totlarance value}
      \item{pca}{List of PCA analysis}

@@ -1,0 +1,21 @@
+Package: liaendmembers
+Type: Package
+Title: Find Endmembers For Lead Isotope Analysis
+Version: 0.2.0
+Authors@R: c(
+    person(
+      "Karan", "Desai",
+      email = "workforce.karan@gmail.com",
+      role = c("aut", "cre")
+    )
+  )
+Description: The package is designed to find lead isotope endmembers from a given set of data points. It implements a two-stage model, leveraging Principal Component Analysis (PCA) to reduce dimensionality and the geochron slope method to define the endmembers. This approach helps to model the isotopic mixing processes.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen : list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Imports: 
+    stats
+Suggests:
+    testthat

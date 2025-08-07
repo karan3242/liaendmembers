@@ -1,18 +1,22 @@
-
-
 #' Find Endmembers
 #'
 #' @description
 #' Finds endmembers from a set of Lead Isotope Points using Principle Component
 #' analysis and the Geochron slope according to the two-stage model.
-#' @param x Data frame of matrix
-#' @param col Isotope column names
+#'
+#' @param x data.frame or matrix object containing Pb 206/204, 207/204, 208/204 isotope ratios.
+#' @param col Isotope column names containing Pb 206/204, 207/204, 208/204 isotope ratios
 #' @param tolerance Tolerance value for points considered to be intercepted.
 #'      (Default 0.01)
 #' @param ... Additional Parameters
 #'
 #' @returns
-#' An object of class 'liaendmembers' as a list of 5
+#' An object of class 'liaendmembers' as a list of 6
+#'      \item{data}{Isotope data}
+#'      \item{group1,group2}{End member groups}
+#'      \item{mixing}{Mixing Group}
+#'      \item{tolerance}{Totlarance value}
+#'      \item{pca}{List of PCA analysis}
 #' @export
 #' @examples
 #' # Create object with class liaendmembers
@@ -100,6 +104,7 @@ endmembers <- function(x, col = NULL, tolerance = 0.01, ...) {
         mixing_group <- isotope_matrix[-as.integer(c(row.names(end_group1), row.names(end_group2))), ]
 
         endmember_list <- list(
+                data = isotope_matrix,
                 group1 = end_group1,
                 group2 = end_group2,
                 mixing = mixing_group,

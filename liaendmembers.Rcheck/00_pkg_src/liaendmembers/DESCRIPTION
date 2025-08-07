@@ -10,10 +10,12 @@ Authors@R: c(
     )
   )
 Description: Finds endmembers from a set of Lead Isotope Points using Principle Component analysis and the Geochron slope according to the two-stage model.
-License: MIT
+License: `use_mit_license()`
 Encoding: UTF-8
+Roxygen : list(markdown = TRUE)
 RoxygenNote: 7.3.2
+Imports: stats
 NeedsCompilation: no
-Packaged: 2025-08-07 15:46:31 UTC; kd
+Packaged: 2025-08-07 16:38:31 UTC; kd
 Author: Karan Desai [aut, cre]
 Maintainer: Karan Desai <workforce.karan@gmail.com>

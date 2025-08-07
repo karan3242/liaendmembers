@@ -1,12 +1,11 @@
-
-
 #' Find Endmembers
 #'
 #' @description
 #' Finds endmembers from a set of Lead Isotope Points using Principle Component
 #' analysis and the Geochron slope according to the two-stage model.
-#' @param x data.frame or matrix object or Pb 206/204, 207/204, 208/204 isotope ratios.
-#' @param col Isotope column names.
+#'
+#' @param x data.frame or matrix object containing Pb 206/204, 207/204, 208/204 isotope ratios.
+#' @param col Isotope column names containing Pb 206/204, 207/204, 208/204 isotope ratios
 #' @param tolerance Tolerance value for points considered to be intercepted.
 #'      (Default 0.01)
 #' @param ... Additional Parameters
@@ -14,10 +13,11 @@
 #' @returns
 #' An object of class 'liaendmembers' as a list of 6
 #'      \item{data}{Isotope data}
-#'      \item{group1, group2}{End member groups}
+#'      \item{group1,group2}{End member groups}
 #'      \item{mixing}{Mixing Group}
 #'      \item{tolerance}{Totlarance value}
 #'      \item{pca}{List of PCA analysis}
+#' @importFrom stats prcomp shapiro.test
 #' @export
 #' @examples
 #' # Create object with class liaendmembers
@@ -27,7 +27,7 @@
 #'         colnames(dor),
 #'         tolerance = 0.01
 #' )
-#' # Prind summary of the liaendmembers object
+#' # Print summary of the liaendmembers object
 #' summary.liaendmembers(end_members)
 endmembers <- function(x, col = NULL, tolerance = 0.01, ...) {
         requireNamespace("stats")
@@ -54,7 +54,7 @@ endmembers <- function(x, col = NULL, tolerance = 0.01, ...) {
 
         isotope_matrix <- x
         if (nrow(isotope_matrix) < 3) {
-                stop("To few samples. Need to  be more than 3")
+                warning("To few samples. Suggest to  be more than 3")
         }
         # Concduct PCA and check if there are only 2 end memebrs
         pca_result <- prcomp(isotope_matrix, scale = FALSE)
@@ -63,7 +63,7 @@ endmembers <- function(x, col = NULL, tolerance = 0.01, ...) {
         sum <- summary(pca_result)
         PC1_vla <- sum$importance[["Cumulative Proportion", "PC1"]]
         if (PC1_vla < 0.95) {
-                warning(
+                message(
                         "PC1 represents less than 95% of the Variance, There may be more than two end members."
                 )
                 print(sum)
@@ -75,7 +75,7 @@ endmembers <- function(x, col = NULL, tolerance = 0.01, ...) {
         norm_test_pc3 <- shapiro.test(pca_values[, "PC3"])$p.value > 0.95
 
         if (!(norm_test_pc1 & norm_test_pc2 & norm_test_pc3)) {
-                warning(
+                message(
                         "PC2 or PC3 are not normally distributed. This may indicate that their variation may not be random noise."
                 )
         }
@@ -98,8 +98,13 @@ endmembers <- function(x, col = NULL, tolerance = 0.01, ...) {
         end_group1 <- end_member_filter(1)
         end_group2 <- end_member_filter(2)
         if (nrow(end_group1) < 2 || nrow(end_group2) < 2) {
-                warning(
+                message(
                         "End Member group has less than two points. Likely hood of the point being an endmember is low"
+                )
+        }
+        if(any(row.names(end_group1) %in% row.names(end_group2))){
+                warning(
+                        "Overlap in endmembers between gorups. Suggest lower tolerance value."
                 )
         }
         mixing_group <- isotope_matrix[-as.integer(c(row.names(end_group1), row.names(end_group2))), ]
@@ -112,6 +117,6 @@ endmembers <- function(x, col = NULL, tolerance = 0.01, ...) {
                 tolarance = tolerance,
                 pca = pca_result
         )
-        endmember_list <- structure(endmember_list, class = "liaendmembers")
+        endmember_list <- structure(endmember_list, class = c("liaendmembers", "list"))
         return(endmember_list)
 }
