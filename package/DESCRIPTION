@@ -1,7 +1,7 @@
 Package: liaendmembers
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
+Title: Find Endmembers For Lead Isotope Analysis
+Version: 0.2.0
 Authors@R: c(
     person(
       "Karan", "Desai",
@@ -9,8 +9,7 @@ Authors@R: c(
       role = c("aut", "cre")
     )
   )
-Description: More about what it does (maybe more than one line).
-    Continuation lines should be indented.
+Description: Finds endmembers from a set of Lead Isotope Points using Principle Component analysis and the Geochron slope according to the two-stage model.
 License: MIT
 Encoding: UTF-8
 LazyData: true

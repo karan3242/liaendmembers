@@ -37,18 +37,61 @@ License components which are templates and need '+ file LICENSE':
 * checking whether the namespace can be unloaded cleanly ... OK
 * checking loading without being on the library search path ... OK
 * checking dependencies in R code ... OK
-* checking S3 generic/method consistency ... OK
+* checking S3 generic/method consistency ... WARNING
+summary:
+  function(object, ...)
+summary.liaendmembers:
+  function(x, ...)
+
+See section ‘Generic functions and methods’ in the ‘Writing R
+Extensions’ manual.
+
+Found the following apparent S3 methods exported but not registered:
+  summary.liaendmembers
+See section ‘Registering S3 methods’ in the ‘Writing R Extensions’
+manual.
 * checking replacement functions ... OK
 * checking foreign function calls ... OK
 * checking R code for possible problems ... OK
+* checking Rd files ... OK
+* checking Rd metadata ... OK
+* checking Rd line widths ... OK
+* checking Rd cross-references ... OK
 * checking for missing documentation entries ... WARNING
 Undocumented code objects:
-  ‘endmembers’
+  ‘summary.liaendmembers’
 All user-level objects in a package should have documentation entries.
 See chapter ‘Writing R documentation files’ in the ‘Writing R
 Extensions’ manual.
-* checking examples ... NONE
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking examples ... ERROR
+Running examples in ‘liaendmembers-Ex.R’ failed
+The error most likely occurred in:
+
+> base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+> ### Name: endmembers
+> ### Title: Find Endmembers
+> ### Aliases: endmembers
+> 
+> ### ** Examples
+> 
+> 
+> # Creat object with class liaendmembers
+> data("dor_silver_hoard")
+Warning in data("dor_silver_hoard") :
+  data set ‘dor_silver_hoard’ not found
+> end_members <- endmembers(dor_silver_hoard[[1]],
++         dor_silver_hoard[[2]],
++         dor_silver_hoard[[3]]
++ )
+Error in safe_cbind(pb64, pb74, pb84) : 
+  object 'dor_silver_hoard' not found
+Calls: endmembers -> safe_cbind
+Execution halted
 * checking for non-standard things in the check directory ... OK
 * checking for detritus in the temp directory ... OK
 * DONE
-Status: 1 WARNING, 2 NOTEs
+Status: 1 ERROR, 2 WARNINGs, 2 NOTEs

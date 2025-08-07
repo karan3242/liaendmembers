@@ -1,7 +1,32 @@
-endmembers <- function(pb64, pb74, pb84, tolarance = 0.01, ...) {
-        requireNamespace("stats")
 
-     # Creat a matrix of isotope rations for PCA
+#' Find Endmembers
+#'
+#' @description
+#' Finds endmembers from a set of Lead Isotope Points using Principle Component
+#' analysis and the Geochron slope according to the two-stage model.
+#'
+#' @param pb64,pb74,pb84 Vectors of Pb Isotope rations 206/204, 207/204, 208/204
+#' @param tolerance Tolerance value for points considered to be intercepted.
+#'      (Default 0.01)
+#' @param ... Additional Parameters
+#'
+#' @returns
+#' An object of class 'liaendmembers' as a list of 5
+#' @export
+#' @examples
+#' # Create object with class liaendmembers
+#' data("dor_silver_hoard")
+#' end_members <- endmembers(
+#'         pb64 = dor_silver_hoard[[1]],
+#'         pb74 = dor_silver_hoard[[2]],
+#'         pb84 = dor_silver_hoard[[3]],
+#'         tolerance = 0.01
+#' )
+#' # Prind summary of the liaendmembers object
+#' summary.liaendmembers(end_members)
+endmembers <- function(pb64, pb74, pb84, tolerance = 0.01, ...) {
+        requireNamespace("stats")
+        # Creat a matrix of isotope rations for PCA
      safe_cbind <- function(pb64, pb74, pb84, ...) {
 
           # 1. Check for equal lengths
@@ -55,7 +80,7 @@ endmembers <- function(pb64, pb74, pb84, tolarance = 0.01, ...) {
      end_member_filter <- function(x, ...){
           geo_intercept <- isotpe_ends[x, "pb74"] - isotpe_ends[x, "pb64"] * geo_slope
           point_itercept <- geo_slope * isotope_matrix[,"pb64"] + geo_intercept
-          prob_end <- abs(isotope_matrix[,"pb74"] - point_itercept) < tolarance
+          prob_end <- abs(isotope_matrix[,"pb74"] - point_itercept) < tolerance
           isotope_matrix[prob_end,]
      }
 
@@ -69,7 +94,7 @@ endmembers <- function(pb64, pb74, pb84, tolarance = 0.01, ...) {
      endmember_list <- list(group1 = end_group1,
                             group2 = end_group2,
                             mixing = mixing_group,
-                            tolarance = tolarance,
+                            tolarance = tolerance,
                             pca = pca_result)
      endmember_list <- structure(endmember_list, class = "liaendmembers")
 }
