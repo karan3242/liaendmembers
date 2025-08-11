@@ -4,10 +4,10 @@
 \alias{summary.liaendmembers}
 \title{Summary of LIA Endmember groups}
 \usage{
-\method{summary}{liaendmembers}(x, ...)
+\method{summary}{liaendmembers}(object, ...)
 }
 \arguments{
-\item{x}{An object of class "liaendmembers"}
+\item{object}{An object of class "liaendmembers"}
 
 \item{...}{further arguments passed to or from other methods.}
 }
@@ -15,7 +15,8 @@
 A list containing:
 
 \item{Counts}{The number of observations in each group}
-\item{Tolerance}{The tolerance value used in the calculation.}
+\item{Tolerance}{Tolerance values used in the calculation.}
+\item{Clamp}{Clamping values used in the calculation.}
 \item{Data}{A data frame of the lead isotope ratios that were used.}
 }
 \description{
@@ -23,12 +24,13 @@ Summary of Lead Isotope analysis 'liaendmemebr' object
 }
 \examples{
 # Create object with class liaendmembers
-data("dor")
+data("tel_dor")
 end_members <- endmembers(
-        dor,
-        colnames(dor),
-        tolerance = 0.01
+        tel_dor,
+        colnames(tel_dor),
+        tolerance = c(0.01, 0.01),
+        clamp = c(Inf, Inf)
 )
 # Print summary of the liaendmembers object
-summary.liaendmembers(end_members)
+summary(end_members)
 }

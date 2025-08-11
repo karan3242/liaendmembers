@@ -8,29 +8,34 @@
 #' @param col Isotope column names containing Pb 206/204, 207/204, 208/204 isotope ratios
 #' @param tolerance Vector of length two, with corespoitng group 1 and group 2 tolerance value for points considered to be intercepted.
 #'      (Default c(0.01, 0.01))
+#' @param clamp Limit filter for points away from the principle component end based on Euclidean distance, (Default c(Inf, Inf))
 #' @param ... Additional Parameters
 #'
 #' @returns
 #' An object of class 'liaendmembers' as a list of 6
 #'      \item{data}{Isotope data}
+#'      \item{pca_ends}{Endmembers maped using PCA}
 #'      \item{group1,group2}{End member groups}
 #'      \item{mixing}{Mixing Group}
 #'      \item{tolerance}{Totlarance value}
+#'      \item{clamp}{Clamping values}
 #'      \item{pca}{List of PCA analysis}
 #' @importFrom stats prcomp shapiro.test
 #' @export
 #' @examples
 #' # Create object with class liaendmembers
-#' data("dor")
+#' data("tel_dor")
 #' end_members <- endmembers(
-#'         dor,
-#'         colnames(dor),
-#'         tolerance = 0.01
+#'         tel_dor,
+#'         colnames(tel_dor),
+#'         tolerance = c(0.01, 0.01),
+#'         clamp = c(Inf, Inf)
 #' )
 #' # Print summary of the liaendmembers object
-#' summary.liaendmembers(end_members)
-endmembers <- function(x, col = NULL, tolerance = c(0.01, 0.01), ...) {
+#' summary(end_members)
+endmembers <- function(x, col = NULL, tolerance = c(0.01, 0.01), clamp = c(Inf, Inf), ...) {
         requireNamespace("stats")
+        # Argument Checks
         if (!inherits(x, "data.frame") && !inherits(x, "matrix")) {
                 stop(paste(
                         deparse(substitute(x)),
@@ -88,15 +93,22 @@ endmembers <- function(x, col = NULL, tolerance = c(0.01, 0.01), ...) {
         geo_slope = 0.626208
 
 
-        end_member_filter <- function(x, tolerance, ...) {
+        end_member_filter <- function(x, tolerance, clamp, ...) {
                 geo_intercept <- isotpe_ends[x, "pb74"] - isotpe_ends[x, "pb64"] * geo_slope
                 point_itercept <- geo_slope * isotope_matrix[, "pb64"] + geo_intercept
                 prob_end <- abs(isotope_matrix[, "pb74"] - point_itercept) < tolerance
-                isotope_matrix[prob_end, ]
+                geochorn_end <- isotope_matrix[prob_end, ,drop = FALSE]
+
+                dist <- apply(geochorn_end, 1,  \(a){
+                        end <- isotpe_ends[x,]
+                        dist <- sqrt(sum((unlist(end) - a)^2))
+                        return(dist)
+                })
+                geochorn_end[dist < clamp, ,drop = FALSE]
         }
 
-        end_group1 <- end_member_filter(1, tolerance[[1]])
-        end_group2 <- end_member_filter(2, tolerance[[2]])
+        end_group1 <- end_member_filter(1, tolerance[[1]], clamp[[1]])
+        end_group2 <- end_member_filter(2, tolerance[[2]], clamp[[2]])
 
         if (nrow(end_group1) < 2 || nrow(end_group2) < 2) {
                 message(
@@ -112,10 +124,12 @@ endmembers <- function(x, col = NULL, tolerance = c(0.01, 0.01), ...) {
 
         endmember_list <- list(
                 data = isotope_matrix,
+                pca_ends = isotpe_ends,
                 group1 = end_group1,
                 group2 = end_group2,
                 mixing = mixing_group,
                 tolarance = tolerance,
+                clamp = clamp,
                 pca = pca_result
         )
         endmember_list <- structure(endmember_list, class = c("liaendmembers", "list"))

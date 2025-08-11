@@ -4,7 +4,7 @@
 \alias{endmembers}
 \title{Find Endmembers}
 \usage{
-endmembers(x, col = NULL, tolerance = c(0.01, 0.01), ...)
+endmembers(x, col = NULL, tolerance = c(0.01, 0.01), clamp = c(Inf, Inf), ...)
 }
 \arguments{
 \item{x}{data.frame or matrix object containing Pb 206/204, 207/204, 208/204 isotope ratios.}
@@ -14,14 +14,18 @@ endmembers(x, col = NULL, tolerance = c(0.01, 0.01), ...)
 \item{tolerance}{Vector of length two, with corespoitng group 1 and group 2 tolerance value for points considered to be intercepted.
 (Default c(0.01, 0.01))}
 
+\item{clamp}{Limit filter for points away from the principle component end based on Euclidean distance, (Default c(Inf, Inf))}
+
 \item{...}{Additional Parameters}
 }
 \value{
 An object of class 'liaendmembers' as a list of 6
      \item{data}{Isotope data}
+     \item{pca_ends}{Endmembers maped using PCA}
      \item{group1,group2}{End member groups}
      \item{mixing}{Mixing Group}
      \item{tolerance}{Totlarance value}
+     \item{clamp}{Clamping values}
      \item{pca}{List of PCA analysis}
 }
 \description{
@@ -30,12 +34,13 @@ analysis and the Geochron slope according to the two-stage model.
 }
 \examples{
 # Create object with class liaendmembers
-data("dor")
+data("tel_dor")
 end_members <- endmembers(
-        dor,
-        colnames(dor),
-        tolerance = 0.01
+        tel_dor,
+        colnames(tel_dor),
+        tolerance = c(0.01, 0.01),
+        clamp = c(Inf, Inf)
 )
 # Print summary of the liaendmembers object
-summary.liaendmembers(end_members)
+summary(end_members)
 }

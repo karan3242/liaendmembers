@@ -1,7 +1,7 @@
 Package: liaendmembers
 Type: Package
 Title: Find Endmembers For Lead Isotope Analysis
-Version: 0.2.0
+Version: 0.3.0
 Authors@R: c(
     person(
       "Karan", "Desai",
