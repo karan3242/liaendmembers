@@ -9,7 +9,7 @@ endmembers(x, col = NULL, tolerance = c(0.01, 0.01), clamp = c(Inf, Inf), ...)
 \arguments{
 \item{x}{data.frame or matrix object containing Pb 206/204, 207/204, 208/204 isotope ratios.}
 
-\item{col}{Isotope column names containing Pb 206/204, 207/204, 208/204 isotope ratios}
+\item{col}{Isotope column names containing Pb 206/204, 207/204, 208/204 isotope ratios. Names must contains the significatn numbers 6, 7 and 8.}
 
 \item{tolerance}{Vector of length two, with corespoitng group 1 and group 2 tolerance value for points considered to be intercepted.
 (Default c(0.01, 0.01))}

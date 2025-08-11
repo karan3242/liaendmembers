@@ -18,4 +18,7 @@ RoxygenNote: 7.3.2
 Imports: 
     stats
 Suggests:
+    knitr,
+    rmarkdown,
     testthat
+VignetteBuilder: knitr

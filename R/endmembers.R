@@ -5,7 +5,7 @@
 #' analysis and the Geochron slope according to the two-stage model.
 #'
 #' @param x data.frame or matrix object containing Pb 206/204, 207/204, 208/204 isotope ratios.
-#' @param col Isotope column names containing Pb 206/204, 207/204, 208/204 isotope ratios
+#' @param col Isotope column names containing Pb 206/204, 207/204, 208/204 isotope ratios. Names must contains the significatn numbers 6, 7 and 8.
 #' @param tolerance Vector of length two, with corespoitng group 1 and group 2 tolerance value for points considered to be intercepted.
 #'      (Default c(0.01, 0.01))
 #' @param clamp Limit filter for points away from the principle component end based on Euclidean distance, (Default c(Inf, Inf))
@@ -24,6 +24,7 @@
 #' @export
 #' @examples
 #' # Create object with class liaendmembers
+# require(liaendmembers)
 #' data("tel_dor")
 #' end_members <- endmembers(
 #'         tel_dor,
@@ -94,9 +95,9 @@ endmembers <- function(x, col = NULL, tolerance = c(0.01, 0.01), clamp = c(Inf, 
 
 
         end_member_filter <- function(x, tolerance, clamp, ...) {
-                geo_intercept <- isotpe_ends[x, "pb74"] - isotpe_ends[x, "pb64"] * geo_slope
-                point_itercept <- geo_slope * isotope_matrix[, "pb64"] + geo_intercept
-                prob_end <- abs(isotope_matrix[, "pb74"] - point_itercept) < tolerance
+                geo_intercept <- isotpe_ends[x, grep("7", colnames(isotpe_ends))] - isotpe_ends[x, grep("6", colnames(isotpe_ends))] * geo_slope
+                point_itercept <- geo_slope * isotope_matrix[, grep("6", colnames(isotpe_ends))] + geo_intercept
+                prob_end <- abs(isotope_matrix[, grep("7", colnames(isotpe_ends))] - point_itercept) < tolerance
                 geochorn_end <- isotope_matrix[prob_end, ,drop = FALSE]
 
                 dist <- apply(geochorn_end, 1,  \(a){

@@ -25,7 +25,7 @@ summary.liaendmembers <- function(object, ...) {
      count <- data.frame(
           "Group1" = nrow(object$group1),
           "Group2" = nrow(object$group2),
-          "Miobjecting" = nrow(object$mixing),
+          "Mixing" = nrow(object$mixing),
           "Total" = sum(nrow(object$data))
      )
      row.names(count) <- "Counts"

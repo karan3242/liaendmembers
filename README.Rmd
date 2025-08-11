@@ -1,0 +1,59 @@
+---
+output: github_document
+bibliography: "/home/kd/PARA/Notes/My Library.bib"
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# liaendmembers
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+This packege provides a convenient way to identify endmembers for the purpouse of provenance analysis, using Principle component analys [@A.D.G+24], and to group the components according to their distribution along the slope of the geochron [@E.E.Y+19].
+
+## Installation
+
+You can install the development version of liaendmembers like so:
+
+``` {r installation}
+# devtools::install_github()
+```
+
+## Datasets
+
+This package comes with Lead Isotope analyse of Iron Age silver hoards from Tel Dor, Akko, Arad, Ein Hofez and Eshtemoa in Israel [@E.E.Y+19].
+
+```{r data}
+head(liaendmembers::tel_dor)
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+```{r example}
+library(liaendmembers)
+## Using the endmemebrs function
+data("tel_dor")
+end_members <- endmembers(
+     tel_dor,
+     colnames(tel_dor),
+     tolerance = c(0.01, 0.01),
+     clamp = c(Inf, Inf)
+)
+
+## Print summary of the liaendmembers object
+summary(end_members)
+```
+
+
