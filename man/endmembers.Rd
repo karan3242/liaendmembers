@@ -4,15 +4,15 @@
 \alias{endmembers}
 \title{Find Endmembers}
 \usage{
-endmembers(x, col = NULL, tolerance = 0.01, ...)
+endmembers(x, col = NULL, tolerance = c(0.01, 0.01), ...)
 }
 \arguments{
 \item{x}{data.frame or matrix object containing Pb 206/204, 207/204, 208/204 isotope ratios.}
 
 \item{col}{Isotope column names containing Pb 206/204, 207/204, 208/204 isotope ratios}
 
-\item{tolerance}{Tolerance value for points considered to be intercepted.
-(Default 0.01)}
+\item{tolerance}{Vector of length two, with corespoitng group 1 and group 2 tolerance value for points considered to be intercepted.
+(Default c(0.01, 0.01))}
 
 \item{...}{Additional Parameters}
 }
@@ -36,6 +36,6 @@ end_members <- endmembers(
         colnames(dor),
         tolerance = 0.01
 )
-# Prind summary of the liaendmembers object
+# Print summary of the liaendmembers object
 summary.liaendmembers(end_members)
 }

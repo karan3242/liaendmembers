@@ -11,7 +11,7 @@
 
      test_that("endmembers() handles warnings and messages", {
           # This warning is expected when the threshold is too high
-          expect_warning(endmembers(dor, names(dor), 0.5), "Overlap in endmembers between gorups. Suggest lower tolerance value.")
+          expect_warning(endmembers(dor, names(dor), c(0.5, 0.5)), "Overlap in endmembers between gorups. Suggest lower tolerance value.")
 
           # This message is expected with normality issues
           expect_message(endmembers(dor, names(dor)), "PC2 or PC3 are not normally distributed. This may indicate that their variation may not be random noise.")

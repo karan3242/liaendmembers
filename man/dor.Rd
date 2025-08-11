@@ -29,7 +29,7 @@ end_members <- endmembers(
         colnames(dor),
         tolerance = 0.01
 )
-# Prind summary of the liaendmembers object
+# Print summary of the liaendmembers object
 summary.liaendmembers(end_members)
 }
 \keyword{datasets}

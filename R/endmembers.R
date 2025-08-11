@@ -6,8 +6,8 @@
 #'
 #' @param x data.frame or matrix object containing Pb 206/204, 207/204, 208/204 isotope ratios.
 #' @param col Isotope column names containing Pb 206/204, 207/204, 208/204 isotope ratios
-#' @param tolerance Tolerance value for points considered to be intercepted.
-#'      (Default 0.01)
+#' @param tolerance Vector of length two, with corespoitng group 1 and group 2 tolerance value for points considered to be intercepted.
+#'      (Default c(0.01, 0.01))
 #' @param ... Additional Parameters
 #'
 #' @returns
@@ -29,7 +29,7 @@
 #' )
 #' # Print summary of the liaendmembers object
 #' summary.liaendmembers(end_members)
-endmembers <- function(x, col = NULL, tolerance = 0.01, ...) {
+endmembers <- function(x, col = NULL, tolerance = c(0.01, 0.01), ...) {
         requireNamespace("stats")
         if (!inherits(x, "data.frame") && !inherits(x, "matrix")) {
                 stop(paste(
@@ -88,15 +88,16 @@ endmembers <- function(x, col = NULL, tolerance = 0.01, ...) {
         geo_slope = 0.626208
 
 
-        end_member_filter <- function(x, ...) {
+        end_member_filter <- function(x, tolerance, ...) {
                 geo_intercept <- isotpe_ends[x, "pb74"] - isotpe_ends[x, "pb64"] * geo_slope
                 point_itercept <- geo_slope * isotope_matrix[, "pb64"] + geo_intercept
                 prob_end <- abs(isotope_matrix[, "pb74"] - point_itercept) < tolerance
                 isotope_matrix[prob_end, ]
         }
 
-        end_group1 <- end_member_filter(1)
-        end_group2 <- end_member_filter(2)
+        end_group1 <- end_member_filter(1, tolerance[[1]])
+        end_group2 <- end_member_filter(2, tolerance[[2]])
+
         if (nrow(end_group1) < 2 || nrow(end_group2) < 2) {
                 message(
                         "End Member group has less than two points. Likely hood of the point being an endmember is low"
