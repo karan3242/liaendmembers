@@ -1,6 +1,6 @@
 #' LIA points of Silver Hoards from Israel
 #'
-#' Lead Isotope ratios of a Silver Hoard from Tel Dor, Akko, Arad, Ein Hofez and  Eshtemona
+#' Lead Isotope ratios of a Phoenician Silver Hoard from Tel Dor, Akko, Arad, Ein Hofez and  Eshtemona
 #' @name data
 #' @format Data frame with 3 variables
 #' \describe{

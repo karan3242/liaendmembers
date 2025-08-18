@@ -40,7 +40,7 @@ ein_hofez
 eshtemoa
 }
 \description{
-Lead Isotope ratios of a Silver Hoard from Tel Dor, Akko, Arad, Ein Hofez and  Eshtemona
+Lead Isotope ratios of a Phoenician Silver Hoard from Tel Dor, Akko, Arad, Ein Hofez and  Eshtemona
 }
 \examples{
 # Create object with class liaendmembers

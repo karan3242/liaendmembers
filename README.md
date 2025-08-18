@@ -28,13 +28,13 @@ from Tel Dor, Akko, Arad, Ein Hofez and Eshtemoa in Israel (Eshel et al.
 
 ``` r
 head(liaendmembers::tel_dor)
-    pb64   pb74   pb84
-1 18.987 15.702 39.043
-2 18.971 15.694 39.023
-3 18.981 15.703 39.053
-4 18.988 15.695 39.029
-5 18.976 15.695 39.028
-6 17.910 15.645 38.003
+#>     pb64   pb74   pb84
+#> 1 18.987 15.702 39.043
+#> 2 18.971 15.694 39.023
+#> 3 18.981 15.703 39.053
+#> 4 18.988 15.695 39.029
+#> 5 18.976 15.695 39.028
+#> 6 17.910 15.645 38.003
 ```
 
 ## Example
@@ -51,28 +51,28 @@ end_members <- endmembers(
      tolerance = c(0.01, 0.01),
      clamp = c(Inf, Inf)
 )
-PC2 or PC3 are not normally distributed. This may indicate that their variation may not be random noise.
+#> PC2 or PC3 are not normally distributed. This may indicate that their variation may not be random noise.
 
 ## Print summary of the liaendmembers object
 summary(end_members)
-Summary of End memebers:
-
-Tolarance: 0.01 0.01 
-Clamp: Inf Inf 
-
-PCA Endmembers
-     pb64   pb74   pb84
-9  17.906 15.643 37.991
-10 19.034 15.732 39.382
-
-       Group1 Group2 Miobjecting Total
-Counts      3     12          17    32
-- - - - - - - - - - - - - - - - - - 
-Importance of components:
-                          PC1     PC2     PC3
-Standard deviation     0.4957 0.05492 0.01592
-Proportion of Variance 0.9869 0.01211 0.00102
-Cumulative Proportion  0.9869 0.99898 1.00000
+#> Summary of End memebers:
+#> 
+#> Tolarance: 0.01 0.01 
+#> Clamp: Inf Inf 
+#> 
+#> PCA Endmembers
+#>      pb64   pb74   pb84
+#> 9  17.906 15.643 37.991
+#> 10 19.034 15.732 39.382
+#> 
+#>        Group1 Group2 Mixing Total
+#> Counts      3     12     17    32
+#> - - - - - - - - - - - - - - - - - - 
+#> Importance of components:
+#>                           PC1     PC2     PC3
+#> Standard deviation     0.4957 0.05492 0.01592
+#> Proportion of Variance 0.9869 0.01211 0.00102
+#> Cumulative Proportion  0.9869 0.99898 1.00000
 ```
 
 <div id="refs" class="references csl-bib-body hanging-indent"

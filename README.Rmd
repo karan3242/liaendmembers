@@ -8,7 +8,7 @@ bibliography: "/home/kd/PARA/Notes/My Library.bib"
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "",
+  comment = "#>",
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
@@ -19,7 +19,10 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-This packege provides a convenient way to identify endmembers for the purpouse of provenance analysis, using Principle component analys [@A.D.G+24], and to group the components according to their distribution along the slope of the geochron [@E.E.Y+19].
+This packege provides a convenient way to identify endmembers for the purpouse
+of provenance analysis, using Principle component analys [@A.D.G+24], and to
+group the components according to their distribution along the slope of the
+geochron [@E.E.Y+19].
 
 ## Installation
 
@@ -31,7 +34,8 @@ You can install the development version of liaendmembers like so:
 
 ## Datasets
 
-This package comes with Lead Isotope analyse of Iron Age silver hoards from Tel Dor, Akko, Arad, Ein Hofez and Eshtemoa in Israel [@E.E.Y+19].
+This package comes with Lead Isotope analyse of Iron Age silver hoards from Tel
+Dor, Akko, Arad, Ein Hofez and Eshtemoa in Israel [@E.E.Y+19].
 
 ```{r data}
 head(liaendmembers::tel_dor)
@@ -55,5 +59,3 @@ end_members <- endmembers(
 ## Print summary of the liaendmembers object
 summary(end_members)
 ```
-
-

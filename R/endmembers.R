@@ -1,4 +1,4 @@
-#' Find Endmembers
+#' Find Endmembers from a list of LIA points
 #'
 #' @description
 #' Finds endmembers from a set of Lead Isotope Points using Principle Component
@@ -45,7 +45,11 @@ endmembers <- function(x, col = NULL, tolerance = c(0.01, 0.01), clamp = c(Inf, 
         }
 
         if (is.null(col)) {
-                stop("column names needed!")
+                stop("Column names needed!")
+        }
+
+        if(length(grep("6|7|8", col)) != 3){
+                stop("Incorrect number or names of colums")
         }
 
         x <- x[, col]

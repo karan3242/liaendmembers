@@ -5,6 +5,7 @@
 #' @param object An object of class "liaendmembers"
 #' @param ... further arguments passed to or from other methods.
 #'
+#'
 #' @returns
 #' A list containing:
 #'

@@ -2,7 +2,7 @@
 % Please edit documentation in R/endmembers.R
 \name{endmembers}
 \alias{endmembers}
-\title{Find Endmembers}
+\title{Find Endmembers from a list of LIA points}
 \usage{
 endmembers(x, col = NULL, tolerance = c(0.01, 0.01), clamp = c(Inf, Inf), ...)
 }
