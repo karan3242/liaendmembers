@@ -9,7 +9,11 @@
 #'   \item{pb84}{Lead Isotope ratio of 208Pb/204Pb}
 #' }
 #'
-#' @source Eshel, T., Erel, Y., Yahalom-Mack, N., Tirosh, O., & Gilboa, A. (2019). Lead isotopes in silver reveal earliest Phoenician quest for metals in the west Mediterranean. Proceedings of the National Academy of Sciences, 116(13), 6007–6012. \href{https://doi.org/10.1073/pnas.1817951116}{10.1073/pnas.1817951116}
+#' @source Eshel, T., Erel, Y., Yahalom-Mack, N., Tirosh, O., & Gilboa, A.
+#'   (2019). Lead isotopes in silver reveal earliest Phoenician quest for metals
+#'   in the west Mediterranean. Proceedings of the National Academy of Sciences,
+#'   116(13), 6007–6012.
+#'   \href{https://doi.org/10.1073/pnas.1817951116}{10.1073/pnas.1817951116}
 #' @inherit endmembers examples
 "tel_dor"
 
@@ -24,4 +28,3 @@
 
 #' @rdname data
 "eshtemoa"
-

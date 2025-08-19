@@ -7,14 +7,19 @@
 endmembers(x, col = NULL, tolerance = c(0.01, 0.01), clamp = c(Inf, Inf), ...)
 }
 \arguments{
-\item{x}{data.frame or matrix object containing Pb 206/204, 207/204, 208/204 isotope ratios.}
+\item{x}{data.frame or matrix object containing
+Pb 206/204, 207/204, 208/204 isotope ratios.}
 
-\item{col}{Isotope column names containing Pb 206/204, 207/204, 208/204 isotope ratios. Names must contains the significatn numbers 6, 7 and 8.}
+\item{col}{Isotope column names containing Pb
+206/204, 207/204, 208/204 isotope ratios.
+Names must contains the significatn numbers 6, 7 and 8.}
 
-\item{tolerance}{Vector of length two, with corespoitng group 1 and group 2 tolerance value for points considered to be intercepted.
-(Default c(0.01, 0.01))}
+\item{tolerance}{Vector of length two, with corespoitng group 1 and group
+2 tolerance value for points considered to be intercepted.
+    (Default c(0.01, 0.01))}
 
-\item{clamp}{Limit filter for points away from the principle component end based on Euclidean distance, (Default c(Inf, Inf))}
+\item{clamp}{Limit filter for points away from the principle component end
+based on Euclidean distance, (Default c(Inf, Inf))}
 
 \item{...}{Additional Parameters}
 }
@@ -29,7 +34,8 @@ An object of class 'liaendmembers' as a list of 6
      \item{pca}{List of PCA analysis}
 }
 \description{
-Finds endmembers from a set of Lead Isotope Points using Principle Component
+Finds endmembers from a set of
+Lead Isotope Points using Principle Component
 analysis and the Geochron slope according to the two-stage model.
 }
 \examples{

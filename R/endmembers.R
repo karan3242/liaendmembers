@@ -1,14 +1,20 @@
 #' Find Endmembers from a list of LIA points
 #'
 #' @description
-#' Finds endmembers from a set of Lead Isotope Points using Principle Component
+#' Finds endmembers from a set of
+#' Lead Isotope Points using Principle Component
 #' analysis and the Geochron slope according to the two-stage model.
 #'
-#' @param x data.frame or matrix object containing Pb 206/204, 207/204, 208/204 isotope ratios.
-#' @param col Isotope column names containing Pb 206/204, 207/204, 208/204 isotope ratios. Names must contains the significatn numbers 6, 7 and 8.
-#' @param tolerance Vector of length two, with corespoitng group 1 and group 2 tolerance value for points considered to be intercepted.
+#' @param x data.frame or matrix object containing
+#' Pb 206/204, 207/204, 208/204 isotope ratios.
+#' @param col Isotope column names containing Pb
+#' 206/204, 207/204, 208/204 isotope ratios.
+#' Names must contains the significatn numbers 6, 7 and 8.
+#' @param tolerance Vector of length two, with corespoitng group 1 and group
+#'  2 tolerance value for points considered to be intercepted.
 #'      (Default c(0.01, 0.01))
-#' @param clamp Limit filter for points away from the principle component end based on Euclidean distance, (Default c(Inf, Inf))
+#' @param clamp Limit filter for points away from the principle component end
+#' based on Euclidean distance, (Default c(Inf, Inf))
 #' @param ... Additional Parameters
 #'
 #' @returns
@@ -24,7 +30,7 @@
 #' @export
 #' @examples
 #' # Create object with class liaendmembers
-# require(liaendmembers)
+#  require(liaendmembers)
 #' data("tel_dor")
 #' end_members <- endmembers(
 #'         tel_dor,
@@ -34,7 +40,11 @@
 #' )
 #' # Print summary of the liaendmembers object
 #' summary(end_members)
-endmembers <- function(x, col = NULL, tolerance = c(0.01, 0.01), clamp = c(Inf, Inf), ...) {
+endmembers <- function(x,
+                       col = NULL,
+                       tolerance = c(0.01, 0.01),
+                       clamp = c(Inf, Inf),
+                       ...) {
         requireNamespace("stats")
         # Argument Checks
         if (!inherits(x, "data.frame") && !inherits(x, "matrix")) {
@@ -48,7 +58,7 @@ endmembers <- function(x, col = NULL, tolerance = c(0.01, 0.01), clamp = c(Inf, 
                 stop("Column names needed!")
         }
 
-        if(length(grep("6|7|8", col)) != 3){
+        if (length(grep("6|7|8", col)) != 3) {
                 stop("Incorrect number or names of colums")
         }
 
@@ -60,7 +70,7 @@ endmembers <- function(x, col = NULL, tolerance = c(0.01, 0.01), clamp = c(Inf, 
         if (!is.numeric(x)) {
                 stop("Non-numeric values in dataframe or matrix")
         }
-        row.names(x) <- 1:nrow(x)
+        row.names(x) <- seq_len(nrow(x))
 
         isotope_matrix <- x
         if (nrow(isotope_matrix) < 3) {
@@ -71,8 +81,8 @@ endmembers <- function(x, col = NULL, tolerance = c(0.01, 0.01), clamp = c(Inf, 
         pca_values <- pca_result$x
         row.names(pca_values) <- row.names(isotope_matrix)
         sum <- summary(pca_result)
-        PC1_vla <- sum$importance[["Cumulative Proportion", "PC1"]]
-        if (PC1_vla < 0.95) {
+        pc1_vla <- sum$importance[["Cumulative Proportion", "PC1"]]
+        if (pc1_vla < 0.95) {
                 message(
                         "PC1 represents less than 95% of the Variance, There may be more than two end members."
                 )
@@ -84,9 +94,11 @@ endmembers <- function(x, col = NULL, tolerance = c(0.01, 0.01), clamp = c(Inf, 
         norm_test_pc2 <- shapiro.test(pca_values[, "PC2"])$p.value > 0.95
         norm_test_pc3 <- shapiro.test(pca_values[, "PC3"])$p.value > 0.95
 
-        if (!(norm_test_pc1 & norm_test_pc2 & norm_test_pc3)) {
+        if (!(norm_test_pc1 && norm_test_pc2 && norm_test_pc3)) {
                 message(
-                        "PC2 or PC3 are not normally distributed. This may indicate that their variation may not be random noise."
+                        "PC2 or PC3 are not normally distributed.
+                        This may indicate that their variation may not
+                        be random noise."
                 )
         }
 
@@ -95,21 +107,23 @@ endmembers <- function(x, col = NULL, tolerance = c(0.01, 0.01), clamp = c(Inf, 
 
         isotpe_ends <- isotope_matrix[as.numeric(row.names(pca_ends)), ]
 
-        geo_slope = 0.626208
-
+        geo_slope <- 0.626208
 
         end_member_filter <- function(x, tolerance, clamp, ...) {
-                geo_intercept <- isotpe_ends[x, grep("7", colnames(isotpe_ends))] - isotpe_ends[x, grep("6", colnames(isotpe_ends))] * geo_slope
+                geo_intercept <-
+                        isotpe_ends[x, grep("7", colnames(isotpe_ends))] - isotpe_ends[x, grep("6", colnames(isotpe_ends))] * geo_slope
                 point_itercept <- geo_slope * isotope_matrix[, grep("6", colnames(isotpe_ends))] + geo_intercept
                 prob_end <- abs(isotope_matrix[, grep("7", colnames(isotpe_ends))] - point_itercept) < tolerance
-                geochorn_end <- isotope_matrix[prob_end, ,drop = FALSE]
+                geochorn_end <- isotope_matrix[prob_end, , drop = FALSE]
 
-                dist <- apply(geochorn_end, 1,  \(a){
-                        end <- isotpe_ends[x,]
-                        dist <- sqrt(sum((unlist(end) - a)^2))
-                        return(dist)
+                dist <- apply(geochorn_end, 1, \(a) {
+                        end <- isotpe_ends[x, ]
+                        dist <- sqrt(sum((unlist(
+                                end
+                        ) - a)^2))
+                        dist
                 })
-                geochorn_end[dist < clamp, ,drop = FALSE]
+                geochorn_end[dist < clamp, , drop = FALSE]
         }
 
         end_group1 <- end_member_filter(1, tolerance[[1]], clamp[[1]])
@@ -120,10 +134,8 @@ endmembers <- function(x, col = NULL, tolerance = c(0.01, 0.01), clamp = c(Inf, 
                         "End Member group has less than two points. Likely hood of the point being an endmember is low"
                 )
         }
-        if(any(row.names(end_group1) %in% row.names(end_group2))){
-                warning(
-                        "Overlap in endmembers between gorups. Suggest lower tolerance value."
-                )
+        if (any(row.names(end_group1) %in% row.names(end_group2))) {
+                warning("Overlap in endmembers between gorups. Suggest lower tolerance value.")
         }
         mixing_group <- isotope_matrix[-as.integer(c(row.names(end_group1), row.names(end_group2))), ]
 
@@ -137,6 +149,7 @@ endmembers <- function(x, col = NULL, tolerance = c(0.01, 0.01), clamp = c(Inf, 
                 clamp = clamp,
                 pca = pca_result
         )
-        endmember_list <- structure(endmember_list, class = c("liaendmembers", "list"))
+        endmember_list <-
+                structure(endmember_list, class = c("liaendmembers", "list"))
         return(endmember_list)
 }
