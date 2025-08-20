@@ -5,6 +5,7 @@
 
 <!-- badges: start -->
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16909256.svg)](https://doi.org/10.5281/zenodo.16909256)
 <!-- badges: end -->
 
 This packege provides a convenient way to identify endmembers for the
