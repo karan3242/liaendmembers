@@ -16,9 +16,7 @@ distribution along the slope of the geochron (Eshel et al. 2019).
 
 You can install the development version of liaendmembers like so:
 
-``` r
-# devtools::install_github()
-```
+    devtools::install_github("karan3242/liaendmembers")
 
 ## Datasets
 

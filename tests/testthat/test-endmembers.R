@@ -20,7 +20,8 @@ test_that("endmembers() handles warnings and messages", {
         # This message is expected with normality issues
         expect_message(
                 endmembers(tel_dor, names(tel_dor)),
-                "PC2 or PC3 are not normally distributed. This may indicate that their variation may not be random noise."
+                "PC2 or PC3 are not normally distributed. This may indicate
+                that their variation may not be random noise."
         )
 })
 

@@ -9,10 +9,7 @@ bibliography: "/home/kd/PARA/Notes/My Library.bib"
 ---
 
 ```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
 

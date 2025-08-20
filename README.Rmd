@@ -28,8 +28,8 @@ geochron [@E.E.Y+19].
 
 You can install the development version of liaendmembers like so:
 
-``` {r installation}
-# devtools::install_github()
+```
+devtools::install_github("karan3242/liaendmembers")
 ```
 
 ## Datasets

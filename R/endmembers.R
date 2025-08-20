@@ -96,9 +96,7 @@ endmembers <- function(x,
 
         if (!(norm_test_pc1 && norm_test_pc2 && norm_test_pc3)) {
                 message(
-                        "PC2 or PC3 are not normally distributed.
-                        This may indicate that their variation may not
-                        be random noise."
+                        "PC2 or PC3 are not normally distributed. This may indicate that their variation may not be random noise."
                 )
         }
 
