@@ -11,7 +11,7 @@ euc_dist(x, ox, ox_col, group, .n = 10, as.dist = FALSE, ...)
 mf_dist(x, ox, ox_col, group, .n = 10, as.dist = FALSE, s = 0.001, ...)
 
 endmember_dist(
-  df,
+  x,
   ox,
   ox_col,
   group,
@@ -23,33 +23,37 @@ endmember_dist(
 )
 }
 \arguments{
-\item{x}{matrix of Pb Isotopes with colums in the order of
-206Pb/204Pb, 207Pb/204Pb,208Pb/204Pb}
+\item{x}{Matrix of Pb Isotopes with colums in the order of
+206Pb/204Pb, 207Pb/204Pb,208Pb/204Pb or a `liaendmember` object.}
 
-\item{ox}{dataframe of renfrence data contained the Pb Isotope rations}
+\item{ox}{Dataframe of renfrence data contained the Pb Isotope rations}
 
-\item{ox_col}{vector contained names of the Pb Isotope rations.
+\item{ox_col}{Vector contained names of the Pb Isotope rations.
 Names much include digits 6, 7, 8 for isotope ratio identification.}
 
-\item{group}{groups belonging to reach isotope ration vector}
+\item{group}{Groups belonging to reach isotope ration vector}
 
 \item{.n}{Length of result output (Default = 10)}
 
 \item{as.dist}{Option to show distances or only a vector of closest groups.}
 
-\item{...}{}
+\item{...}{Additional params}
 
-\item{s}{mass-fractionation factor (Defualt = 0.001)}
+\item{s}{Mass-fractionation factor (Defualt = 0.001)}
 
 \item{dist_type}{Distance type to use, simple euclidiant ('ed') or
 mass-fractionation corrected ('mfd')}
 }
 \value{
-data frame or charecter vector
+Data frame or charecter vector
 
-list of dataframe or charecter vector
+List of dataframe or charecter vector
 }
 \description{
 Calcutalte the culidian distanc of each isotope sample to a reference dataset,
 and gives the clossest regions to the groups.
+Mass-fractionation follows the procedure outlined in Albarede et.al (2024)
+}
+\references{
+Albarede, F., Davis, G., Blichert-Toft, J., Gentelli, L., Gitler, H., Pinto, M., & Telouk, P. (2024). A new algorithm for using Pb isotopes to determine the provenance of bullion in ancient Greek coinage. Journal of Archaeological Science, 163, 105919. https://doi.org/10.1016/j.jas.2023.105919
 }
