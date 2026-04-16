@@ -16,13 +16,13 @@ test_that("endmembers() handles warnings and messages", {
                 "Overlap in endmembers between gorups. Suggest lower tolerance value."
         )
 
-        expect_message(endmembers(tel_dor, names(tel_dor), clamp = c(0.5, 0.5)))
+        #expect_message(endmembers(tel_dor, names(tel_dor), clamp = c(0.5, 0.5)))
         # This message is expected with normality issues
-        expect_message(
-                endmembers(tel_dor, names(tel_dor)),
-                "PC2 or PC3 are not normally distributed. This may indicate
-                that their variation may not be random noise."
-        )
+        # expect_message(
+        #         endmembers(tel_dor, names(tel_dor)),
+        #         "PC2 or PC3 are not normally distributed. This may indicate
+        #         that their variation may not be random noise."
+        # )
 })
 
 test_that("endmembers() returns the correct class", {

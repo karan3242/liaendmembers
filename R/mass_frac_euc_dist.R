@@ -1,6 +1,7 @@
 #' Euclidean Distance for Pb Isotope rations to ore Sources
 #'
-#' This function
+#' Calcutalte the culidian distanc of each isotope sample to a reference dataset,
+#' and gives the clossest regions to the groups.
 #'
 #' @param x matrix of Pb Isotopes with colums in the order of
 #' 206Pb/204Pb, 207Pb/204Pb,208Pb/204Pb
@@ -54,6 +55,7 @@ euc_dist <- function(x,
         sorted_unique_groups <- unique(hits_sorted$group)
         head(sorted_unique_groups, n = .n)
 }
+
 #' @rdname euc_dist
 #' @param s mass-fractionation factor (Defualt = 0.001)
 #' @export
@@ -146,8 +148,8 @@ mf_dist <- function(x,
 
 
 #' @rdname euc_dist
-#' @param dist_type Distance type to use, simple euclidiant or
-#' mass-fractionation corrected
+#' @param dist_type Distance type to use, simple euclidiant ('ed') or
+#' mass-fractionation corrected ('mfd')
 #' @returns list of dataframe or charecter vector
 #' @export
 endmember_dist <- function(df,

@@ -41,8 +41,8 @@ Names much include digits 6, 7, 8 for isotope ratio identification.}
 
 \item{s}{mass-fractionation factor (Defualt = 0.001)}
 
-\item{dist_type}{Distance type to use, simple euclidiant or
-mass-fractionation corrected}
+\item{dist_type}{Distance type to use, simple euclidiant ('ed') or
+mass-fractionation corrected ('mfd')}
 }
 \value{
 data frame or charecter vector
@@ -50,5 +50,6 @@ data frame or charecter vector
 list of dataframe or charecter vector
 }
 \description{
-This function
+Calcutalte the culidian distanc of each isotope sample to a reference dataset,
+and gives the clossest regions to the groups.
 }
