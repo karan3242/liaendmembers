@@ -13,6 +13,7 @@ Description: This package integrates advanced lead isotope provenance methods in
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+LazyDataCompression: xz
 Roxygen : list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Imports: 

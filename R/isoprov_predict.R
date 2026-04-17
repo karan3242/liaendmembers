@@ -174,6 +174,8 @@ xgboost_predict <- function(x, model_list = NULL, .n) {
 #' @param model_list Model list gnerated by [train_data()]
 #' @param .n Intiger for numer of observations.
 #'
+#' @importFrom stats na.omit predict setNames
+#'
 #' @returns
 #' data.frame object or list of data.frames
 #' @export
