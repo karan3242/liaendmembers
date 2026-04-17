@@ -21,10 +21,13 @@ knitr::opts_chunk$set(
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.16909256.svg)](https://doi.org/10.5281/zenodo.16909256)
 <!-- badges: end -->
 
-This package provides a convenient way to identify endmembers for the purpose
-of provenance analysis, using principle component analysis [@A.D.G+24], and to
-Group the components according to their distribution along the slope of the
-geochron [@E.E.Y+19].
+This package provides convenient tools for provenance analysis using lead isotope data. Specifically, the software enables researchers to:
+
+- Identify endmembers for provenance analysis using Principal Component Analysis [@A.D.G+24] and group components by their distribution along the geochron slope [@E.E.Y+19].
+
+- Calculate nearest distances between sample and reference data within ore isotope databases using Euclidean metrics with or without mass-dependent fractionation corrections [@A.D.B+24].
+
+- Determine probabilities of samples originating from specific subregional groups as defined by established isotope databases [@S.K.D+26].
 
 ## Installation
 
@@ -37,10 +40,16 @@ devtools::install_github("karan3242/liaendmembers")
 ## Datasets
 
 This package comes with Lead Isotope analyse of Iron Age silver hoards from Tel
-Dor, Akko, Arad, Ein Hofez and Eshtemoa in Israel [@E.E.Y+19].
+Dor, Akko, Arad, Ein Hofez and Eshtemoa in Israel [@E.E.Y+19],
 
 ```{r data}
 head(liaendmembers::tel_dor)
+```
+
+along with a pretrained preovence `xgb.Booster` model for prevenance prediction.
+
+```{r data}
+head(liaendmembers::model, 3)
 ```
 
 ## Example
@@ -57,7 +66,10 @@ end_members <- endmembers(
      tolerance = c(0.01, 0.01),
      clamp = c(Inf, Inf)
 )
-
 ## Print summary of the liaendmembers object
 summary(end_members)
+
+## Use predictive model to find the probablity of provenance
+
+isoprov_predict(end_members, model)
 ```
