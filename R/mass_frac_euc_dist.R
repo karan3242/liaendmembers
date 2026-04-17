@@ -1,23 +1,9 @@
-#' Euclidean Distance for Pb Isotope rations to ore Sources
-#'
-#' Calcutalte the culidian distanc of each isotope sample to a reference dataset,
-#' and gives the clossest regions to the groups.
-#' Mass-fractionation follows the procedure outlined in Albarede et.al (2024)
-#'
-#' @param x Matrix or dataframe of Pb Isotopes with colums in the order of
-#' 206Pb/204Pb, 207Pb/204Pb,208Pb/204Pb or a `liaendmember` object.
-#' @param ref `ref.data` object used for Reference alaysis.
-#' @param .n Length of result output (Default = 1)
-#' @param ... Additional params
-#'
-#' @references Albarede, F., Davis, G., Blichert-Toft, J., Gentelli, L., Gitler, H., Pinto, M., & Telouk, P. (2024). A new algorithm for using Pb isotopes to determine the provenance of bullion in ancient Greek coinage. Journal of Archaeological Science, 163, 105919. https://doi.org/10.1016/j.jas.2023.105919
-#'
-#' @returns Data frame or charecter vector
-#' @export
-#'
+# Euc Dist ----------------------------------------------------------------
+
+
 euc_dist <- function(x,
                      ref,
-                     .n = 1,
+                     .n,
                      ...) {
 
         if (!inherits(ref, "ref.data")) {
@@ -61,13 +47,13 @@ euc_dist <- function(x,
 }
 
 
-#' @rdname euc_dist
-#' @param s Mass-fractionation factor (Defualt = 0.001)
-#' @export
+# Mass Frac ---------------------------------------------------------------
+
+
 mf_dist <- function(x,
                     ref,
-                    .n = 1,
-                    s = 0.001,
+                    .n,
+                    s,
                     ...) {
 
         if (!inherits(ref, "ref.data")) {
@@ -139,40 +125,64 @@ mf_dist <- function(x,
         return(final_df)
 }
 
-
-#' @rdname euc_dist
+#' Euclidean Distance for Pb Isotope rations to ore Sources
+#'
+#' Calcutalte the culidian distanc of each isotope sample to a reference dataset,
+#' and gives the clossest regions to the groups.
+#' Mass-fractionation follows the procedure outlined in Albarede et.al (2024)
+#'
+#' @param x Matrix, data frame of `liaendmembers objectof Pb Isotopes with colums in the order of
+#' 206Pb/204Pb, 207Pb/204Pb,208Pb/204Pb or a `liaendmember` object.
+#' @param ref `ref.data` object used for Reference alaysis.
+#' @param .n Length of result output (Default = 1)
 #' @param dist_type Distance type to use, simple euclidiant ('ed') or
 #' mass-fractionation corrected ('mfd')
+#' @param s Mass-fractionation factor (Defualt = 0.001)
+#' @param ... Additional params
+#'
+#' @references Albarede, F., Davis, G., Blichert-Toft, J., Gentelli, L., Gitler, H., Pinto, M., & Telouk, P. (2024). A new algorithm for using Pb isotopes to determine the provenance of bullion in ancient Greek coinage. Journal of Archaeological Science, 163, 105919. https://doi.org/10.1016/j.jas.2023.105919
+#'
 #' @returns List of dataframe or charecter vector
 #' @export
-endmember_dist <- function(x,
-                           ref,
-                           dist_type = "ed",
-                           .n = 1,
-                           s = 0.001,
-                           ...) {
-
-        if (!inherits(x, "liaendmembers")) {
-                stop("Input 'x' is not of class 'liaendmembers'")
-        }
-
-        if (length(x) < 4) stop("Object x lacks elements 3 and 4.")
-        target_groups <- x[3:4]
-
-        # Use match.arg for robust parameter handling
+isoprov_dist <- function(x,
+                         ref,
+                         dist_type = stop("Distance type should be Defined 'ed' or 'mfd'"),
+                         .n = 1,
+                         s = 0.001,
+                         ...) {
         dist_type <- match.arg(dist_type, c("ed", "mfd"))
+        if (inherits(x, "liaendmembers")) {
+                target_groups <- x[3:4]
+                if (dist_type == "ed") {
+                        out <- lapply(target_groups, function(grp) {
+                                euc_dist(grp,
+                                         ref = ref,
+                                         .n = .n)
+                        })
+                } else if (dist_type == "mfd") {
+                        # Specifically for mfd, ensure 's' is explicitly passed
+                        out <- lapply(target_groups, function(grp) {
+                                mf_dist(
+                                        grp,
+                                        ref = ref,
+                                        s = s,
+                                        .n = .n
+                                )
+                        })
+                }
+
+                return(out)
+        }
 
         if (dist_type == "ed") {
-                out <- lapply(target_groups, function(grp) {
-                        euc_dist(grp, ref = ref, .n = .n)
-                })
-        } else {
-                # Specifically for mfd, ensure 's' is explicitly passed
-                out <- lapply(target_groups, function(grp) {
-                        mf_dist(grp, ref = ref, s = s, .n = .n)
-                })
+                out <- euc_dist(x, ref = ref, .n = .n)
+        } else if (dist_type == "mfd") {
+                out <- mf_dist(x,
+                               ref = ref,
+                               s = s,
+                               .n = .n)
         }
-
         return(out)
-}
 
+
+}

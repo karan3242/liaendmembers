@@ -4,7 +4,7 @@
 \alias{isoprov_predict}
 \title{Predict Isotope Provenance}
 \usage{
-isoprov_predict(x, model_list = NULL, .n = 10)
+isoprov_predict(x, model_list = NULL, .n = 6)
 }
 \arguments{
 \item{x}{Matrix of liaendmembers object of pbisotope samples}
