@@ -4,7 +4,14 @@
 \alias{isoprov_dist}
 \title{Euclidean Distance for Pb Isotope rations to ore Sources}
 \usage{
-isoprov_dist(x, ref, dist_type = "ed", .n = 1, s = 0.001, ...)
+isoprov_dist(
+  x,
+  ref,
+  dist_type = stop("Distance type should be Defined 'ed' or 'mfd'"),
+  .n = 1,
+  s = 0.001,
+  ...
+)
 }
 \arguments{
 \item{x}{Matrix, data frame of `liaendmembers objectof Pb Isotopes with colums in the order of

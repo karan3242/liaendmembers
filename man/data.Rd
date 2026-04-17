@@ -8,6 +8,7 @@
 \alias{arad}
 \alias{ein_hofez}
 \alias{eshtemoa}
+\alias{model}
 \title{LIA points of Silver Hoards from Israel}
 \format{
 Data frame with 3 variables
@@ -24,6 +25,8 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 43 rows and 3 columns.
 
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 32 rows and 3 columns.
+
+List with xgb.Booster objects
 }
 \source{
 Eshel, T., Erel, Y., Yahalom-Mack, N., Tirosh, O., & Gilboa, A.
@@ -42,6 +45,8 @@ arad
 ein_hofez
 
 eshtemoa
+
+model
 }
 \description{
 Lead Isotope ratios of a Phoenician Silver Hoard from Tel Dor, Akko, Arad, Ein Hofez and  Eshtemona

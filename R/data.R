@@ -28,3 +28,9 @@
 
 #' @rdname data
 "eshtemoa"
+
+#' Trained Model for LIA Prediction
+#'
+#' @name data
+#' @format List with xgb.Booster objects
+"model"

@@ -42,6 +42,10 @@ ref_data <- function(x, cols, group) {
 #' @param .nrounds Max number of boosting iterations. (Default = 100)
 #' @inheritDotParams dbscan::dbscan minPts weights borderPoints
 #' @inheritDotParams xgboost::xgb.train early_stopping_rounds maximize
+#'
+#' @importFrom dbscan dbscan
+#' @importFrom smotefamily SMOTE
+#' @importFrom xgboost xgb.train xgb.DMatrix
 #' @returns
 #' List of xgboot.model objects.
 #' @export
@@ -143,7 +147,7 @@ train_data <- function(ref,
 
 # Prediction Function -----------------------------------------------------
 
-.predict <- function(x, model_list = NULL, .n) {
+xgboost_predict <- function(x, model_list = NULL, .n) {
         dtest <- xgboost::xgb.DMatrix(as.matrix(x))
 
         all_preds <- lapply(model_list, function(m) {
@@ -177,10 +181,10 @@ isoprov_predict <- function(x, model_list = NULL, .n = 6) {
      if (inherits(x, "liaendmembers")) {
           target_groups <- x[3:4]
           pred <- lapply(target_groups, \(grp) {
-               .predict(grp, model_list = model_list, .n = .n)
+                  xgboost_predict(grp, model_list = model_list, .n = .n)
           })
           return(pred)
      }
 
-     return(.predict(x, model_list = model_list, .n = .n))
+     return(xgboost_predict(x, model_list = model_list, .n = .n))
 }
