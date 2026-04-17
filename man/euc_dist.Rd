@@ -6,36 +6,19 @@
 \alias{endmember_dist}
 \title{Euclidean Distance for Pb Isotope rations to ore Sources}
 \usage{
-euc_dist(x, ox, ox_col, group, .n = 10, as.dist = FALSE, ...)
+euc_dist(x, ref, .n = 1, ...)
 
-mf_dist(x, ox, ox_col, group, .n = 10, as.dist = FALSE, s = 0.001, ...)
+mf_dist(x, ref, .n = 1, s = 0.001, ...)
 
-endmember_dist(
-  x,
-  ox,
-  ox_col,
-  group,
-  dist_type = "ed",
-  .n = 10,
-  as.dist = FALSE,
-  s = 0.001,
-  ...
-)
+endmember_dist(x, ref, dist_type = "ed", .n = 1, s = 0.001, ...)
 }
 \arguments{
-\item{x}{Matrix of Pb Isotopes with colums in the order of
+\item{x}{Matrix or dataframe of Pb Isotopes with colums in the order of
 206Pb/204Pb, 207Pb/204Pb,208Pb/204Pb or a `liaendmember` object.}
 
-\item{ox}{Dataframe of renfrence data contained the Pb Isotope rations}
+\item{ref}{`ref.data` object used for Reference alaysis.}
 
-\item{ox_col}{Vector contained names of the Pb Isotope rations.
-Names much include digits 6, 7, 8 for isotope ratio identification.}
-
-\item{group}{Groups belonging to reach isotope ration vector}
-
-\item{.n}{Length of result output (Default = 10)}
-
-\item{as.dist}{Option to show distances or only a vector of closest groups.}
+\item{.n}{Length of result output (Default = 1)}
 
 \item{...}{Additional params}
 

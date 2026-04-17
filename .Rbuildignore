@@ -6,3 +6,4 @@
 ^doc$
 ^Meta$
 ^.lintr$
+^R/Test\.R$
