@@ -1,10 +1,6 @@
 # Euc Dist ----------------------------------------------------------------
 
-euc_dist <- function(x,
-                     ref,
-                     .n,
-                     ...) {
-
+euc_dist <- function(x, ref, .n, ...) {
         if (!inherits(ref, "ref.data")) {
                 stop("ref must be of class ref.data.")
         }
@@ -29,18 +25,14 @@ euc_dist <- function(x,
                 # Rename reference columns to distinguish from query
                 names(match_ref) <- paste0("ref_", names(match_ref))
 
-                out <- cbind(
-                        query_vals[rep(1, .n), , drop = FALSE],
-                        dist = row_dists[hits_indices],
-                        match_ref
-                )
+                out <- cbind(query_vals[rep(1, .n), , drop = FALSE], dist = row_dists[hits_indices], match_ref)
 
                 return(out)
         })
 
 
         final_df <- do.call(rbind, results_list)
-        final_df <- final_df[order(final_df$dist),]
+        final_df <- final_df[order(final_df$dist), ]
         # rownames(final_df) <- NULL
         return(final_df)
 }
@@ -48,12 +40,7 @@ euc_dist <- function(x,
 
 # Mass Frac ---------------------------------------------------------------
 
-mf_dist <- function(x,
-                    ref,
-                    .n,
-                    s,
-                    ...) {
-
+mf_dist <- function(x, ref, .n, s, ...) {
         if (!inherits(ref, "ref.data")) {
                 stop("ref must be of class ref.data.")
         }
@@ -65,10 +52,9 @@ mf_dist <- function(x,
 
         # Constant Correlation Matrix R for Pb isotopes
         R <- matrix(
-                c(1, 0.96, 0.94,
-                  0.96, 1, 0.96,
-                  0.94, 0.96, 1),
-                nrow = 3, byrow = TRUE
+                c(1, 0.96, 0.94, 0.96, 1, 0.96, 0.94, 0.96, 1),
+                nrow = 3,
+                byrow = TRUE
         )
 
         results_list <- lapply(seq_len(nrow(x_mat)), function(j) {
@@ -83,12 +69,13 @@ mf_dist <- function(x,
                 W <- sd_diag %*% R %*% sd_diag
 
                 # 3. Projection setup (Gram-Schmidt)
-                basis1 <- if (abs(n[1]) < 0.9) c(1, 0, 0) else c(0, 1, 0)
+                basis1 <- if (abs(n[1]) < 0.9)
+                        c(1, 0, 0)
+                else
+                        c(0, 1, 0)
                 u1 <- basis1 - (sum(basis1 * n)) * n
                 u1 <- u1 / sqrt(sum(u1^2))
-                u2 <- c(n[2] * u1[3] - n[3] * u1[2],
-                        n[3] * u1[1] - n[1] * u1[3],
-                        n[1] * u1[2] - n[2] * u1[1])
+                u2 <- c(n[2] * u1[3] - n[3] * u1[2], n[3] * u1[1] - n[1] * u1[3], n[1] * u1[2] - n[2] * u1[1])
                 P <- cbind(u1, u2)
 
                 # 4. Project W into 2D and invert
@@ -108,18 +95,14 @@ mf_dist <- function(x,
                 names(match_ref) <- paste0("ref_", names(match_ref))
 
                 # Combine: Query | Distance | Match Metadata & Values
-                out <- cbind(
-                        query_vals[rep(1, .n), , drop = FALSE],
-                        dist_sq = d_sq[hit_indices],
-                        match_ref
-                )
+                out <- cbind(query_vals[rep(1, .n), , drop = FALSE], dist_sq = d_sq[hit_indices], match_ref)
 
                 return(out)
         })
 
         # Finalize
         final_df <- do.call(rbind, results_list)
-        final_df <- final_df[order(final_df$dist),]
+        final_df <- final_df[order(final_df$dist), ]
         return(final_df)
 }
 
@@ -142,6 +125,7 @@ mf_dist <- function(x,
 #' @references Albarede, F., Davis, G., Blichert-Toft, J., Gentelli, L., Gitler, H., Pinto, M., & Telouk, P. (2024). A new algorithm for using Pb isotopes to determine the provenance of bullion in ancient Greek coinage. Journal of Archaeological Science, 163, 105919. https://doi.org/10.1016/j.jas.2023.105919
 #'
 #' @returns List of dataframe or charecter vector
+#' @inherit endmembers examples
 #' @export
 isoprov_dist <- function(x,
                          ref,

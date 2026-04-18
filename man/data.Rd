@@ -27,7 +27,7 @@
   \item{pb84}{Lead Isotope ratio of 208Pb/204Pb}
 }
 
-**For Xgboost model:** List with xgb.Booster objects
+**For Xgboost model:** List with xgb.Booster objects tranied usen parameters following (Shnyr et al., 2026)
 
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 22 rows and 3 columns.
 
@@ -82,6 +82,8 @@ summary(end_members)
 isoprov_dist(end_members, ref_data, dist_type = "ed")
 # Get Mass Fractionnation Corrected distance
 isoprov_dist(end_members, ref_data, dist_type = "mfd")
+# Train XGBOOST model on Reference data
+\dontrun{model <- train_data(ref_data)}
 # Get XGBOOST predicted resutls
 isoprov_predict(end_members, model)
 }

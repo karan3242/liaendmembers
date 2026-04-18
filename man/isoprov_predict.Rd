@@ -19,3 +19,6 @@ data.frame object or list of data.frames
 \description{
 Predicuts Pb Isotope provencnace of a sample matrix in reference ot a xgboost trained list
 }
+\seealso{
+train_data
+}

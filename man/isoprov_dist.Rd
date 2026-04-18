@@ -36,6 +36,26 @@ Calcutalte the culidian distanc of each isotope sample to a reference dataset,
 and gives the clossest regions to the groups.
 Mass-fractionation follows the procedure outlined in Albarede et.al (2024)
 }
+\examples{
+# Create object with class liaendmembers
+data("tel_dor")
+end_members <- endmembers(
+        tel_dor,
+        colnames(tel_dor),
+        tolerance = c(0.01, 0.01),
+        clamp = c(Inf, Inf)
+)
+# Print summary of the liaendmembers object
+summary(end_members)
+# Get Uclidian distance
+isoprov_dist(end_members, ref_data, dist_type = "ed")
+# Get Mass Fractionnation Corrected distance
+isoprov_dist(end_members, ref_data, dist_type = "mfd")
+# Train XGBOOST model on Reference data
+\dontrun{model <- train_data(ref_data)}
+# Get XGBOOST predicted resutls
+isoprov_predict(end_members, model)
+}
 \references{
 Albarede, F., Davis, G., Blichert-Toft, J., Gentelli, L., Gitler, H., Pinto, M., & Telouk, P. (2024). A new algorithm for using Pb isotopes to determine the provenance of bullion in ancient Greek coinage. Journal of Archaeological Science, 163, 105919. https://doi.org/10.1016/j.jas.2023.105919
 }

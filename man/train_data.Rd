@@ -6,7 +6,7 @@
 \usage{
 train_data(
   ref,
-  .minSize = 3,
+  .minSize = 20,
   .minPts_fac = 0.1,
   .eps = 0.18,
   .eta = 0.1,
@@ -19,7 +19,7 @@ train_data(
 \arguments{
 \item{ref}{`ref.data` object created by ref_data.}
 
-\item{.minSize}{Minisume number of samples in group to be used for sampeling (Default = 3).}
+\item{.minSize}{Minimum number of samples in group to be used for clustering (Default = 20).}
 
 \item{.minPts_fac}{scaling factor minimum needed points from each group, ranging from 0:1. (Default = 0.1)}
 
@@ -31,7 +31,7 @@ train_data(
 
 \item{.nrounds}{Max number of boosting iterations. (Default = 100)}
 
-\item{nthread}{Number of threadts for parallel processing. When choosing it, please keep thread contention and hyperthreading in mind. (Default = 4)}
+\item{nthread}{Number of threads for parallel processing. When choosing it, please keep thread contention and hyperthreading in mind. (Default = 4)}
 
 \item{...}{
   Arguments passed on to \code{\link[dbscan:dbscan]{dbscan::dbscan}}, \code{\link[xgboost:xgb.train]{xgboost::xgb.train}}
@@ -59,9 +59,49 @@ This parameter is passed to the \code{\link[xgboost:xgb.cb.early.stop]{xgb.cb.ea
 List of xgboot.model objects.
 }
 \description{
-Trains XGBOOST model for predictive isotope analysis using DCSCAN clustring
+Trains XGBOOST model for predictive isotope analysis using DBSCAN clustring
 SMOTE data imputation for training data set, and XGBOOST, following the method
 of Shnyr et.al (2026)
+}
+\details{
+The Machine learning workflow as descrived by (Shnyr et al., 2026)
+for data prepraation, clustering, class balanceing, classifications are dissucussed here.
+}
+\section{DBSCAN clustering and outlier identification}{
+
+Density-Based Spatial Clustering of Applications with Noise (DBSCAN) algorithm to identify outliers and subgroup patterns. This method facilitated outlier removal and cluster formation within lead isotopic data, effectively reducing inter-regional overlaps. Systematic evaluation of the neighborhood radius (eps) utilized the Silhouette Score and Davies–Bouldin Index. The optimal parameter, eps = 0.18, yielded a Silhouette Score of 0.691 and a Davies–Bouldin Index of 0.347. This result indicates the formation of well-separated, compact clusters. The minimum points parameter (minPts) was dynamically established at 10\% of the total samples per region. This strategy adapts the density threshold to varying sample sizes, adhering to established proportional scaling practices. To ensure reliability, analysis was restricted to regions with >= 20 samples. This constraint successfully minimized noise-related bias. Finally, regions forming multiple clusters received systematic labels, while single-cluster regions remained unassigned.
+}
+
+\section{SMOTE application}{
+
+
+The Synthetic Minority Over-sampling Technique (SMOTE) generates synthetic data points for the minority class through interpolation. This process balances class distribution and enhances learning by introducing variety while reducing overfitting risks. This study transformed the dataset into a binary classification problem. Synthetic sample counts were dynamically adjusted based on minority cluster density to maintain appropriate balance. This step mitigated class imbalance, preventing predictive bias and improving classifier performance.
+}
+
+\section{XGBoost Model training}{
+
+Researchers applied the XGBoost algorithm to train a binary classification model using three isotopic ratios as input features. The regional cluster names derived from DBSCAN served as target labels. The resampled dataset was partitioned into training and testing sets, treating each cluster as an independent classification problem. This iterative process involved data encoding, SMOTE application, and individual XGBoost model training for every cluster. Final results demonstrate varying probabilities for potential clusters as the definitive source for the sample group.
+}
+
+\examples{
+# Create object with class liaendmembers
+data("tel_dor")
+end_members <- endmembers(
+        tel_dor,
+        colnames(tel_dor),
+        tolerance = c(0.01, 0.01),
+        clamp = c(Inf, Inf)
+)
+# Print summary of the liaendmembers object
+summary(end_members)
+# Get Uclidian distance
+isoprov_dist(end_members, ref_data, dist_type = "ed")
+# Get Mass Fractionnation Corrected distance
+isoprov_dist(end_members, ref_data, dist_type = "mfd")
+# Train XGBOOST model on Reference data
+\dontrun{model <- train_data(ref_data)}
+# Get XGBOOST predicted resutls
+isoprov_predict(end_members, model)
 }
 \references{
 Shnyr, E., Kuflik, T., Desai, K., & Eshel, T. (2026). Determining the origins of Phoenician silver: Exploring the potential of machine learning for lead isotope analysis. Journal of Archaeological Science, 188, 106–499. https://doi.org/10.1016/j.jas.2026.106499

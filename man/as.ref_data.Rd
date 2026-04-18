@@ -4,7 +4,7 @@
 \alias{as.ref_data}
 \title{Cereate Reference data object for LIA endmember distance and probablity estimate functions.}
 \usage{
-as.ref_data(x, cols, group)
+as.ref_data(x, cols, group, min_groupsize = 5)
 }
 \arguments{
 \item{x}{Reference data frame or tibble.}
@@ -12,6 +12,8 @@ as.ref_data(x, cols, group)
 \item{cols}{Nector of column names which represent 206Pb/204Pb, 207Pb/204Pb, 208Pb/204Pb}
 
 \item{group}{Name of the column containing siotope groups as character string.}
+
+\item{min_groupsize}{Integer value for the minimum number samples in a group. (Default = 5)}
 }
 \value{
 ref.data object with Isotope groupings and Isotope colums of
@@ -19,5 +21,7 @@ ref.data object with Isotope groupings and Isotope colums of
 with shorter names.
 }
 \description{
-Cereate Reference data object for LIA endmember distance and probablity estimate functions.
+Data preprocessing and cleaning esured the reliability and accuracy of provenance analyis.
+This step results in the removel of all NA values from the selected Isotope talbes, and groups.
+The step also should exluce the groups which have low sample data (in the case of (Shnyr et al., (2026) it was 5).
 }

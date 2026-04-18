@@ -44,6 +44,8 @@
 #' isoprov_dist(end_members, ref_data, dist_type = "ed")
 #' # Get Mass Fractionnation Corrected distance
 #' isoprov_dist(end_members, ref_data, dist_type = "mfd")
+#' # Train XGBOOST model on Reference data
+#' \dontrun{model <- train_data(ref_data)}
 #' # Get XGBOOST predicted resutls
 #' isoprov_predict(end_members, model)
 endmembers <- function(x,
