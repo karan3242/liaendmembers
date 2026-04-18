@@ -40,6 +40,12 @@
 #' )
 #' # Print summary of the liaendmembers object
 #' summary(end_members)
+#' # Get Uclidian distance
+#' isoprov_dist(end_members, ref_data, dist_type = "ed")
+#' # Get Mass Fractionnation Corrected distance
+#' isoprov_dist(end_members, ref_data, dist_type = "mfd")
+#' # Get XGBOOST predicted resutls
+#' isoprov_predict(end_members, model)
 endmembers <- function(x,
                        col = NULL,
                        tolerance = c(0.01, 0.01),

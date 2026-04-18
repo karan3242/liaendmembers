@@ -9,7 +9,7 @@ isoprov_predict(x, model_list = NULL, .n = 6)
 \arguments{
 \item{x}{Matrix of liaendmembers object of pbisotope samples}
 
-\item{model_list}{Model list gnerated by [train_data()]}
+\item{model_list}{Model list gnerated by `train_data()`}
 
 \item{.n}{Intiger for numer of observations.}
 }

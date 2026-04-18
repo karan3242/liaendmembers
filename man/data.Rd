@@ -8,15 +8,26 @@
 \alias{arad}
 \alias{ein_hofez}
 \alias{eshtemoa}
+\alias{ref_data}
 \alias{model}
 \title{LIA points of Silver Hoards from Israel}
 \format{
-Data frame with 3 variables
+**For artefact sampels:** Data frame with 3 variables
 \describe{
   \item{pb64}{Lead Isotope ratio of 206Pb/204Pb}
   \item{pb74}{Lead Isotope ratio of 207Pb/204Pb}
   \item{pb84}{Lead Isotope ratio of 208Pb/204Pb}
 }
+
+**For reference data:** Object of class `ref.data` with 4 variables.
+\describe{
+  \item{group}{Regions of Ore samples}
+  \item{pb64}{Lead Isotope ratio of 206Pb/204Pb}
+  \item{pb74}{Lead Isotope ratio of 207Pb/204Pb}
+  \item{pb84}{Lead Isotope ratio of 208Pb/204Pb}
+}
+
+**For Xgboost model:** List with xgb.Booster objects
 
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 22 rows and 3 columns.
 
@@ -26,7 +37,9 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 32 rows and 3 columns.
 
-List with xgb.Booster objects
+An object of class \code{ref.data} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 7267 rows and 4 columns.
+
+An object of class \code{list} of length 157.
 }
 \source{
 Eshel, T., Erel, Y., Yahalom-Mack, N., Tirosh, O., & Gilboa, A.
@@ -46,10 +59,13 @@ ein_hofez
 
 eshtemoa
 
+ref_data
+
 model
 }
 \description{
-Lead Isotope ratios of a Phoenician Silver Hoard from Tel Dor, Akko, Arad, Ein Hofez and  Eshtemona
+Lead Isotope ratios of a Phoenician Silver Hoard from Tel Dor, Akko, Arad, Ein Hofez and  Eshtemona.
+Reference Data set of Isotope rations and a pretrained model using default parameters from [train_data()]
 }
 \examples{
 # Create object with class liaendmembers
@@ -62,5 +78,11 @@ end_members <- endmembers(
 )
 # Print summary of the liaendmembers object
 summary(end_members)
+# Get Uclidian distance
+isoprov_dist(end_members, ref_data, dist_type = "ed")
+# Get Mass Fractionnation Corrected distance
+isoprov_dist(end_members, ref_data, dist_type = "mfd")
+# Get XGBOOST predicted resutls
+isoprov_predict(end_members, model)
 }
 \keyword{datasets}

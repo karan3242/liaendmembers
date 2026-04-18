@@ -11,7 +11,7 @@
 #' 206Pb/204Pb, 207Pb/204Pb, 208Pb/204Pb
 #' with shorter names.
 #' @export
-ref_data <- function(x, cols, group) {
+as.ref_data <- function(x, cols, group) {
         if (!all(cols %in% names(x))) {
                 stop("column names not found")
         }
@@ -188,7 +188,7 @@ xgboost_predict <- function(x, model_list = NULL, .n) {
 #' Predicuts Pb Isotope provencnace of a sample matrix in reference ot a xgboost trained list
 #'
 #' @param x Matrix of liaendmembers object of pbisotope samples
-#' @param model_list Model list gnerated by [train_data()]
+#' @param model_list Model list gnerated by `train_data()`
 #' @param .n Intiger for numer of observations.
 #'
 #' @importFrom stats na.omit predict setNames

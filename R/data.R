@@ -1,13 +1,22 @@
 #' LIA points of Silver Hoards from Israel
 #'
-#' Lead Isotope ratios of a Phoenician Silver Hoard from Tel Dor, Akko, Arad, Ein Hofez and  Eshtemona
+#' Lead Isotope ratios of a Phoenician Silver Hoard from Tel Dor, Akko, Arad, Ein Hofez and  Eshtemona.
+#' Reference Data set of Isotope rations and a pretrained model using default parameters from [train_data()]
 #' @name data
-#' @format Data frame with 3 variables
+#' @format **For artefact sampels:** Data frame with 3 variables
 #' \describe{
 #'   \item{pb64}{Lead Isotope ratio of 206Pb/204Pb}
 #'   \item{pb74}{Lead Isotope ratio of 207Pb/204Pb}
 #'   \item{pb84}{Lead Isotope ratio of 208Pb/204Pb}
 #' }
+#' @format **For reference data:** Object of class `ref.data` with 4 variables.
+#' \describe{
+#'   \item{group}{Regions of Ore samples}
+#'   \item{pb64}{Lead Isotope ratio of 206Pb/204Pb}
+#'   \item{pb74}{Lead Isotope ratio of 207Pb/204Pb}
+#'   \item{pb84}{Lead Isotope ratio of 208Pb/204Pb}
+#' }
+#' @format **For Xgboost model:** List with xgb.Booster objects
 #'
 #' @source Eshel, T., Erel, Y., Yahalom-Mack, N., Tirosh, O., & Gilboa, A.
 #'   (2019). Lead isotopes in silver reveal earliest Phoenician quest for metals
@@ -29,8 +38,8 @@
 #' @rdname data
 "eshtemoa"
 
-#' Trained Model for LIA Prediction
-#'
-#' @name data
-#' @format List with xgb.Booster objects
+#' @rdname data
+"ref_data"
+
+#' @rdname data
 "model"
