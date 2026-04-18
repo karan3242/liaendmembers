@@ -37,9 +37,9 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 32 rows and 3 columns.
 
-An object of class \code{ref.data} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 7267 rows and 4 columns.
+An object of class \code{ref.data} (inherits from \code{ref.data}, \code{tbl_df}, \code{tbl}, \code{data.frame}) with 6866 rows and 4 columns.
 
-An object of class \code{list} of length 157.
+An object of class \code{list} of length 349.
 }
 \source{
 Eshel, T., Erel, Y., Yahalom-Mack, N., Tirosh, O., & Gilboa, A.
