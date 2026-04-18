@@ -4,14 +4,14 @@
 \alias{isoprov_predict}
 \title{Predict Isotope Provenance}
 \usage{
-isoprov_predict(x, model_list = NULL, .n = 6)
+isoprov_predict(x, model_list = NULL, .probablity = 0.95)
 }
 \arguments{
 \item{x}{Matrix of liaendmembers object of pbisotope samples}
 
 \item{model_list}{Model list gnerated by `train_data()`}
 
-\item{.n}{Intiger for numer of observations.}
+\item{.probablity}{Probablity between 0 and 1 of a Guess being correct. (Default = 0.95)}
 }
 \value{
 data.frame object or list of data.frames

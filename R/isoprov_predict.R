@@ -201,22 +201,46 @@ train_data <- function(ref,
 
 # Prediction Function -----------------------------------------------------
 
-xgboost_predict <- function(x, model_list = NULL, .n) {
-        dtest <- xgboost::xgb.DMatrix(as.matrix(x))
+xgboost_predict <- function(x, model_list = NULL, .probablity) {
+        rownames(x) <- NULL
+        dtest_all <- xgboost::xgb.DMatrix(as.matrix(x))
 
-        all_preds <- lapply(model_list, function(m) {
-                if (is.null(m))
-                        return(rep(NA, nrow(x)))
-                predict(m, dtest)
+        all_model_results <- lapply(names(model_list), function(m_name) {
+                m <- model_list[[m_name]]
+                if (is.null(m)) return(NULL)
+
+                probs <- predict(m, dtest_all)
+
+                idx <- which(probs >= .probablity)
+
+                if (length(idx) == 0) return(NULL)
+
+                subset_x <- x[idx, , drop = FALSE]
+                subset_probs <- probs[idx]
+                res <- data.frame(
+                        subset_x,
+                        group = m_name,
+                        prob = as.numeric(subset_probs),
+                        stringsAsFactors = FALSE
+                )
+                rownames(res) <- NULL
+                return(res)
         })
-        df <- stack(as.data.frame(all_preds))
-        names(df) <- c("prob", "group")
-        df <- df[, c("group", "prob")]
-        df$group <- gsub("\\.", " ", df$group)
-        head(df[order(df$prob, decreasing = TRUE), ], .n)
+
+        all_model_results <- all_model_results[!sapply(all_model_results, is.null)]
+
+        if (length(all_model_results) == 0) return(NULL)
+
+        final_df <- do.call(rbind, all_model_results)
+
+        names(final_df) <- c("pb64", "pb74", "pb84", "group", "prob")
+        final_df$group <- gsub("_", " ", final_df$group)
+
+        final_df <- final_df[order(final_df$prob, decreasing = TRUE), ]
+        rownames(final_df) <- NULL
+
+        return(final_df)
 }
-
-
 
 # End member Prediction function ------------------------------------------
 
@@ -226,7 +250,7 @@ xgboost_predict <- function(x, model_list = NULL, .n) {
 #'
 #' @param x Matrix of liaendmembers object of pbisotope samples
 #' @param model_list Model list gnerated by `train_data()`
-#' @param .n Intiger for numer of observations.
+#' @param .probablity Probablity between 0 and 1 of a Guess being correct. (Default = 0.95)
 #'
 #' @importFrom stats na.omit predict setNames
 #'
@@ -234,16 +258,22 @@ xgboost_predict <- function(x, model_list = NULL, .n) {
 #' data.frame object or list of data.frames
 #' @seealso train_data
 #' @export
-isoprov_predict <- function(x, model_list = NULL, .n = 6) {
+isoprov_predict <- function(x,
+                            model_list = NULL,
+                            .probablity = 0.95) {
         if (inherits(x, "liaendmembers")) {
                 target_groups <- x[3:4]
-                pred <- lapply(target_groups, \(grp) {
+                pred <- lapply(target_groups, function(grp) {
+                        if (is.null(grp) || nrow(grp) == 0)
+                                return(NULL)
                         xgboost_predict(grp,
                                         model_list = model_list,
-                                        .n = .n)
+                                        .probablity = .probablity)
                 })
+
+                names(pred) <- names(target_groups)
                 return(pred)
         }
 
-        return(xgboost_predict(x, model_list = model_list, .n = .n))
+        return(xgboost_predict(x, model_list = model_list, .probablity = .probablity))
 }
