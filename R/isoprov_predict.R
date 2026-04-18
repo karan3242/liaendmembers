@@ -36,11 +36,14 @@ ref_data <- function(x, cols, group) {
 #' @references Shnyr, E., Kuflik, T., Desai, K., & Eshel, T. (2026). Determining the origins of Phoenician silver: Exploring the potential of machine learning for lead isotope analysis. Journal of Archaeological Science, 188, 106–499. https://doi.org/10.1016/j.jas.2026.106499
 #'
 #' @param ref `ref.data` object created by ref_data.
+#' @param .minSize Minisume number of samples in group to be used for sampeling (Default = 3).
+#' @param .minPts_fac scaling factor minimum needed points from each group, ranging from 0:1. (Default = 0.1)
 #' @param .eps size (radius) of the epsilon neighborhood. (Default = 0.18)
 #' @param .eta Step size shrinkage used in update to prevent overfitting. After each boosting step, we can directly get the weights of new features, and eta shrinks the feature weights to make the boosting process more conservative. (Defualt = 0.1)
-#' @param .max_depth Maximum depth of a tree. Increasing this value will make the model more complex and more likely to overfit. 0 indicates no limit on depth. Beware that XGBoost aggressively consumes memory when training a deep tree. "exact" tree method requires non-zero value. (Default = 4)
+#' @param .max_depth Maximum depth of a tree. Increasing this value will make the model more complex and more likely to overfit. 0 indicates no limit on depth. Beware that XGBoost aggressively consumes memory when training a deep tree. "exact" tree method requires non-zero value. (Default = 6)
 #' @param .nrounds Max number of boosting iterations. (Default = 100)
-#' @inheritDotParams dbscan::dbscan minPts weights borderPoints
+#' @param nthread Number of threadts for parallel processing. When choosing it, please keep thread contention and hyperthreading in mind. (Default = 4)
+#' @inheritDotParams dbscan::dbscan weights borderPoints
 #' @inheritDotParams xgboost::xgb.train early_stopping_rounds maximize
 #'
 #' @importFrom dbscan dbscan
@@ -50,10 +53,13 @@ ref_data <- function(x, cols, group) {
 #' List of xgboot.model objects.
 #' @export
 train_data <- function(ref,
+                       .minSize = 3,
+                       .minPts_fac = 0.1,
                        .eps = 0.18,
                        .eta = 0.1,
-                       .max_depth = 4,
+                       .max_depth = 6,
                        .nrounds = 100,
+                       nthread = 4L,
                        ...) {
         if (!"ref.data" %in% class(ref)) {
                 stop(
@@ -69,15 +75,25 @@ train_data <- function(ref,
                 group_df <- ox[ox[[1]] == g_name, ]
 
                 # Ensure we have enough data to cluster
-                if (nrow(group_df) < 3)
+                if (nrow(group_df) < .minSize) {
                         return(NULL)
-
-                res <- dbscan::dbscan(group_df[, -1], eps = .eps, ...)
+                }
+                if(!.minPts_fac > 0 & !.minPts_fac < 1 ) {
+                        stop(".minPts_fac should be bettwee 0 or 1")
+                }
+                minPts <- nrow(group_df) * .minPts_fac
+                res <- dbscan::dbscan(group_df[, -1], minPts = minPts , eps = .eps, ...)
                 cluster <- res$cluster
+                group_df <- group_df[cluster > 0, ]
+                cluster_s <- cluster[cluster > 0]
+                if(sum(cluster_s) <= 0){
+                        return(NULL)
+                }
+                if(length(unique(cluster_s))> 1){
+                        group_df[[1]] <- paste0(group_df[[1]], "_", cluster_s)
+                }
+                return(group_df)
 
-                # Filter noise (cluster 0) and update labels
-                group_df[[1]] <- paste0(group_df[[1]], "_", cluster)
-                group_df[cluster > 0, ]
         }
         dbscan_df <- do.call(rbind, lapply(uni_groups, dbscan_groups))
         # SMOTE (Multi-class handling) --------------------------------------------
@@ -129,6 +145,7 @@ train_data <- function(ref,
                         objective = "binary:logistic",
                         eta = .eta,
                         max_depth = .max_depth,
+                        nthread = nthread,
                         eval_metric = "logloss",
                         # scale_pos_weight can help if your group is much smaller than the rest
                         scale_pos_weight = sum(labels == 0) / sum(labels == 1)

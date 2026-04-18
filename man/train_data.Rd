@@ -4,24 +4,38 @@
 \alias{train_data}
 \title{Train XGBOOST Model}
 \usage{
-train_data(ref, .eps = 0.18, .eta = 0.1, .max_depth = 4, .nrounds = 100, ...)
+train_data(
+  ref,
+  .minSize = 3,
+  .minPts_fac = 0.1,
+  .eps = 0.18,
+  .eta = 0.1,
+  .max_depth = 6,
+  .nrounds = 100,
+  nthread = 4L,
+  ...
+)
 }
 \arguments{
 \item{ref}{`ref.data` object created by ref_data.}
+
+\item{.minSize}{Minisume number of samples in group to be used for sampeling (Default = 3).}
+
+\item{.minPts_fac}{scaling factor minimum needed points from each group, ranging from 0:1. (Default = 0.1)}
 
 \item{.eps}{size (radius) of the epsilon neighborhood. (Default = 0.18)}
 
 \item{.eta}{Step size shrinkage used in update to prevent overfitting. After each boosting step, we can directly get the weights of new features, and eta shrinks the feature weights to make the boosting process more conservative. (Defualt = 0.1)}
 
-\item{.max_depth}{Maximum depth of a tree. Increasing this value will make the model more complex and more likely to overfit. 0 indicates no limit on depth. Beware that XGBoost aggressively consumes memory when training a deep tree. "exact" tree method requires non-zero value. (Default = 4)}
+\item{.max_depth}{Maximum depth of a tree. Increasing this value will make the model more complex and more likely to overfit. 0 indicates no limit on depth. Beware that XGBoost aggressively consumes memory when training a deep tree. "exact" tree method requires non-zero value. (Default = 6)}
 
 \item{.nrounds}{Max number of boosting iterations. (Default = 100)}
+
+\item{nthread}{Number of threadts for parallel processing. When choosing it, please keep thread contention and hyperthreading in mind. (Default = 4)}
 
 \item{...}{
   Arguments passed on to \code{\link[dbscan:dbscan]{dbscan::dbscan}}, \code{\link[xgboost:xgb.train]{xgboost::xgb.train}}
   \describe{
-    \item{\code{minPts}}{number of minimum points required in the eps neighborhood for
-core points (including the point itself).}
     \item{\code{weights}}{numeric; weights for the data points. Only needed to perform
 weighted clustering.}
     \item{\code{borderPoints}}{logical; should border points be assigned to clusters.
