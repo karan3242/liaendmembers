@@ -60,15 +60,15 @@ mf_dist <- function(x, ref, .n, s, ...) {
         results_list <- lapply(seq_len(nrow(x_mat)), function(j) {
                 x0 <- x_mat[j, ]
 
-                # 1. Geometry Setup
+                # Geometry Setup
                 v <- x0 * c(2, 3, 4)
                 n <- v / sqrt(sum(v^2))
 
-                # 2. Weighting Matrix W
+                # Weighting Matrix W
                 sd_diag <- diag(c(2, 3, 4) * s * x0)
                 W <- sd_diag %*% R %*% sd_diag
 
-                # 3. Projection setup (Gram-Schmidt)
+                # Projection setup (Gram-Schmidt)
                 basis1 <- if (abs(n[1]) < 0.9)
                         c(1, 0, 0)
                 else
@@ -78,15 +78,15 @@ mf_dist <- function(x, ref, .n, s, ...) {
                 u2 <- c(n[2] * u1[3] - n[3] * u1[2], n[3] * u1[1] - n[1] * u1[3], n[1] * u1[2] - n[2] * u1[1])
                 P <- cbind(u1, u2)
 
-                # 4. Project W into 2D and invert
+                # Project W into 2D and invert
                 W_p_inv <- solve(t(P) %*% W %*% P)
 
-                # 5. Distance Calculation
+                # Distance Calculation
                 delta_X <- sweep(ox_mat, 2, x0, "-")
                 dx_p <- delta_X %*% P
                 d_sq <- rowSums((dx_p %*% W_p_inv) * dx_p)
 
-                # 6. Sorting and Data Merging
+                # Sorting and Data Merging
                 # Get indices of the top .n matches for THIS artifact
                 hit_indices <- order(d_sq)[1:.n]
 
